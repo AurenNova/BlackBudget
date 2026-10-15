@@ -1,0 +1,653 @@
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    background-color: #252525;
+    color: white;
+    border: 1px solid #888888;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+p {
+color: #D8D0E8;
+}
+
+header, main {
+    margin-bottom: 30px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Fondo mágico de BlackBudget */
+body {
+    background-color: #101014;
+    color: #F2F0F7;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+color: var(--lavanda);
+font-size: 20px;
+}
+
+/* Botones de estilo mágico */
+button {
+    background-color: #17131F;
+    color: #C8B5F5;
+    border: 1px solid #7965A8;
+    border-radius: 12px;
+    padding: 14px;
+}
+/* Paleta de colores de BlackBudget */
+:root {
+--fondo: #17131F;
+--lavanda: #C8B5F5;
+--morado: #8B5FC7;
+--superficie: #2B2338;
+}
+
+/* Estilo mágico de BlackBudget */
+body {
+background-color: var(--fondo);
+color: var(--lavanda);
+font-family: Arial, sans-serif;
+}
+/* Estilo mágico de BlackBudget */
+body {
+    background-color: #17131F;
+    color: #C8B5F5;
+    font-family: Arial, sans-serif;
+}
+
+/* Título principal */
+h1 {
+color: var(--lavanda);
+letter-spacing: 2px;
+font-size: 32px;
+text-shadow: 0 0 10px #8B5FC755;
+}
+/* Detalle lunar */
+h1::before {
+    content: "☾ ";
+    color: #C8B5F5;
+}
+
+h1::after {
+    content: " ✧";
+    color: #C8B5F5;
+}#42445A
+
+button {
+background-color: var(--superficie);
+color: var(--lavanda);
+border: 1px solid var(--morado);
+border-radius: 12px;
+padding: 14px;
+font-family: Arial, sans-serif;
+cursor: pointer;
+transition: background-color 0.2s ease;
+}
+
+button:hover {
+background-color: var(--morado);
+color: #FFFFFF;
+}
+
+/* Panel principal */
+main {
+background: var(--superficie);
+border: 1px solid var(--morado);
+border-radius: 18px;
+padding: 24px 16px;
+margin: 24px 12px;
+box-shadow: 0 0 18px #8B5FC733;
+}
+
+/* Encabezado de BlackBudget */
+header {
+text-align: center;
+padding: 30px 12px;
+background: var(--fondo);
+border-bottom: 1px solid var(--morado);
+box-shadow: 0 4px 14px #8B5FC722;
+}
+
+main h2 {
+text-align: center;
+margin-bottom: 24px;
+color: var(--lavanda);
+font-size: 24px;
+text-shadow: 0 0 8px #8B5FC755;
+}
+
+/* Botones con espacio */
+main button {
+    display: block;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* Pequeñas estrellas decorativas */
+header p::before {
+    content: "✦  ";
+    color: #C8B5F5;
+}
+
+header p::after {
+    content: "  ✦";
+    color: #C8B5F5;
+}
+
+/* Textos secundarios */
+p, label {
+color: #D8D0E8;
+}
+/* Campos de entrada de BlackBudget */
+input,
+select,
+textarea {
+width: 100%;
+background-color: var(--superficie);
+color: var(--lavanda);
+border: 1px solid var(--morado);
+border-radius: 10px;
+padding: 12px;
+font-family: Arial, sans-serif;
+font-size: 15px;
+box-sizing: border-box;
+}
+
+/* Color del texto de ayuda */
+input::placeholder,
+textarea::placeholder {
+color: #A99BBF;
+}
+
+/* Cuando seleccionamos un campo */
+input:focus,
+select:focus,
+textarea:focus {
+outline: 2px solid var(--lavanda);
+outline-offset: 2px;
+}
+/* Ocultar la calculadora al iniciar */
+#calculadora {
+display: none;
+}
+
+/* Avisos personalizados de BlackBudget */
+.aviso {
+    background-color: #2B2338;
+    color: #E8DDFB;
+    border: 1px solid #8B5FC7;
+    border-left: 4px solid #C8B5F5;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: 0 0 12px #8B5FC733;
+}
+
+.aviso[hidden] {
+    display: none;
+}
+
+
+/* ✦ BlackBudget: diseño de las calculadoras ✦ */
+
+.calculadora {
+    max-width: 480px;
+    margin: 30px auto;
+    padding: 24px 20px;
+    background: #2B2338;
+    border: 1px solid #8B5FC7;
+    border-radius: 22px;
+    box-shadow: 0 0 22px rgba(139, 95, 199, 0.18);
+    box-sizing: border-box;
+}
+
+.calculadora h2 {
+    color: #C8B5F5;
+    text-align: center;
+    margin-top: 0;
+    font-size: 1.6rem;
+}
+
+.calculadora > p {
+    text-align: center;
+    color: #D8CDEB;
+    margin-bottom: 25px;
+}
+
+.calculadora h3 {
+    color: #C8B5F5;
+    margin-top: 25px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(200, 181, 245, 0.25);
+}
+
+.calculadora label {
+    display: block;
+    color: #E7DFF5;
+    margin-top: 16px;
+    margin-bottom: 7px;
+    font-size: 0.95rem;
+}
+
+.calculadora input {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    background: #17131F;
+    color: #FFFFFF;
+    border: 1px solid #59466F;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.calculadora input:focus {
+    outline: 2px solid #C8B5F5;
+    border-color: #C8B5F5;
+}
+
+.calculadora button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 22px;
+    border: 1px solid #C8B5F5;
+    border-radius: 14px;
+    background: #8B5FC7;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calculadora button:active {
+    transform: scale(0.98);
+}
+
+.calculadora .resultado {
+    margin-top: 25px;
+    padding: 16px;
+    background: #17131F;
+    border: 1px solid #59466F;
+    border-radius: 16px;
+    overflow-wrap: anywhere;
+}
+
+.calculadora .resultado h3 {
+    margin-top: 5px;
+}
+
+.calculadora .resultado p {
+    color: #E7DFF5;
+    line-height: 1.6;
+}
+
+.calculadora .resultado h3:last-child {
+    color: #D9C5FF;
+}
+
+.calculadora .aviso {
+    margin-top: 15px;
+    padding: 12px;
+    background: #392744;
+    color: #F0DFFF;
+    border: 1px solid #B58AE8;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+    .calculadora {
+        width: calc(100% - 24px);
+        margin: 20px auto;
+        padding: 20px 16px;
+    }
+}
+
+/* 🌙 Destacar el precio final */
+
+.calculadora .resultado h3:last-child {
+    margin-top: 20px;
+    padding: 16px 10px;
+    text-align: center;
+    background: linear-gradient(135deg, #392744, #302342);
+    border: 1px solid #C8B5F5;
+    border-radius: 14px;
+    box-shadow: 0 0 14px rgba(200, 181, 245, 0.15);
+    line-height: 1.5;
+}
+
+/* 🌙 Aparición suave de las calculadoras */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calculadora[style*="display: block"] {
+    animation: aparecer 0.45s ease-out;
+}
+
+/* 💜 Botones mágicos de BlackBudget */
+
+.calculadora button {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.calculadora button:hover {
+    box-shadow: 0 0 16px rgba(200, 181, 245, 0.35);
+    background-color: #9B72D6;
+}
+
+.calculadora button:active {
+    transform: scale(0.97);
+    box-shadow: 0 0 22px rgba(200, 181, 245, 0.5);
+}
+
+/* 🌙 Tarjetas de presupuesto */
+
+.calculadora .resultado {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.calculadora .resultado:hover {
+    border-color: #C8B5F5;
+    box-shadow: 0 0 18px rgba(139, 95, 199, 0.25);
+}
+
+@keyframes revelarPresupuesto {
+    from {
+        opacity: 0.5;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calculadora .resultado h3:last-child {
+    animation: revelarPresupuesto 0.5s ease-out;
+}
+
+/* ✨ Campos de entrada luminosos */
+
+.calculadora input {
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.calculadora input:focus {
+    background-color: #211A2D;
+    border-color: #C8B5F5;
+    box-shadow: 0 0 12px rgba(200, 181, 245, 0.22);
+}
+
+/* 💜 Degradado gótico */
+
+.calculadora button {
+    background: linear-gradient(135deg, #8B5FC7, #65409A);
+    border: 1px solid #C8B5F5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.calculadora button:hover {
+    background: linear-gradient(135deg, #A77BE0, #8057B8);
+    box-shadow: 0 0 18px rgba(200, 181, 245, 0.35);
+}
+
+
+/* 🌙 Papel tapiz de BlackBudget */
+
+.decoraciones {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.18;
+
+    background-image: url("./images/papel%20tapiz.png");
+    background-repeat: repeat;
+    background-size: 380px auto;
+    background-position: top left;
+    
+}
+.decoraciones img {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .decoraciones {
+        background-size: 320px auto;
+    }
+}
+
+/* =================================
+   BLACKBUDGET: BOSQUE DE RUNAS
+   Rediseño de la pantalla de inicio
+   ================================= */
+
+/* Título principal */
+#inicio > h2 {
+    color: #e4d2ff;
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 8px #a56bff,
+        0 0 20px #6f35a8;
+    padding: 18px 10px;
+}
+
+/* Botones principales */
+#btnProductos,
+#btnServicios,
+#btnCuentas {
+    display: block;
+    width: 88%;
+    max-width: 360px;
+    margin: 16px auto;
+    padding: 16px 12px;
+
+    color: #f2e9ff;
+    background: linear-gradient(
+        135deg,
+        #302044,
+        #563675,
+        #302044
+    );
+
+    border: 1px solid #b99ae5;
+    border-radius: 16px;
+
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+
+    box-shadow:
+        0 0 8px #6d438b55,
+        inset 0 0 12px #b99ae522;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Brillo al tocar los botones */
+#btnProductos:active,
+#btnServicios:active,
+#btnCuentas:active {
+    transform: scale(0.97);
+    box-shadow:
+        0 0 16px #c4a0ff99,
+        inset 0 0 14px #d9baff33;
+}
+
+/* Detalles del patrón decorativo */
+.prueba-patron {
+    border: 1px solid #8f6bb3;
+    border-radius: 18px;
+    box-shadow:
+        0 0 18px #75449b44,
+        inset 0 0 20px #75449b22;
+}
+
+/* Separadores mágicos, sin imágenes adicionales */
+#inicio > h2::after {
+    content: "  ✧ ᚱ ᛟ ᚾ ᛞ ᛟ ✧";
+    display: block;
+    margin-top: 12px;
+    color: #c9a7ff;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px #a56bff;
+}
+
+/* Evita animaciones excesivas si el dispositivo
+   tiene activada la reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    #btnProductos,
+    #btnServicios,
+    #btnCuentas {
+        transition: none;
+    }
+}
+
+/* FONDO DEL BOSQUE MÁGICO */
+#inicio {
+    position: relative;
+    isolation: isolate;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(12, 7, 24, 0.30),
+            rgba(12, 7, 24, 0.58)
+        ),
+        url("images/fondo de fantasia.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #8f6bb3;
+    border-radius: 20px;
+    padding: 18px 10px;
+    box-shadow: 0 0 22px #75449b55;
+}
+
+/* Mantener el contenido por encima del fondo */
+#inicio > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================================
+   BLACKBUDGET: INTERFAZ DE GRIMORIO
+   ================================== */
+
+/* Panel de inicio */
+#inicio {
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 1px solid rgba(196, 160, 255, 0.65);
+    box-shadow:
+        0 0 18px rgba(133, 78, 190, 0.25),
+        inset 0 0 28px rgba(15, 7, 30, 0.35);
+}
+
+/* Título encantado */
+#inicio > h2 {
+    padding: 22px 8px;
+    color: #f0e5ff;
+    text-shadow:
+        0 0 5px #b98aff,
+        0 0 16px #874bd1;
+}
+
+/* Botones como cristales violetas */
+#btnProductos,
+#btnServicios,
+#btnCuentas {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 90%;
+    max-width: 360px;
+    padding: 17px 12px;
+
+    color: #fbf7ff;
+    background: linear-gradient(
+        135deg,
+        rgba(35, 21, 53, 0.94),
+        rgba(91, 54, 126, 0.91),
+        rgba(31, 19, 47, 0.96)
+    );
+
+    border: 1px solid #c5a2f2;
+    border-radius: 14px;
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.32),
+        inset 0 0 12px rgba(204, 169, 255, 0.12);
+
+    font-size: 1rem;
+    font-weight: 700;
+    text-shadow: 0 0 7px rgba(210, 179, 255, 0.35);
+}
+
+/* Brillo suave al tocar */
+#btnProductos:active,
+#btnServicios:active,
+#btnCuentas:active {
+    background: linear-gradient(
+        135deg,
+        #68438e,
+        #39254f
+    );
+    box-shadow: 0 0 20px rgba(188, 139, 255, 0.6);
+    transform: scale(0.98);
+}
+
+/* Separación entre los botones */
+#btnProductos,
+#btnServicios,
+#btnCuentas {
+    margin: 18px auto;
+}
+
+/* Decoración sutil del panel */
+#inicio {
+    outline: 1px solid rgba(183, 141, 232, 0.15);
+    outline-offset: 4px;
+}

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BlackBudget</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="decoraciones" aria-hidden="true"></div>
+        <h1>☾ BlackBudget ✧</h1>
+        <p>Tu trabajo, tu valor, tus cuentas.</p>
+    </header>
+
+    <main id="inicio">
+        <h2>¿Qué vamos a presupuestar?</h2>
+        <button id="btnProductos">Productos y manualidades</button>
+        <button id="btnServicios">🎨 Comisiones artísticas</button>
+<button id="btnCuentas">💜 Mis cuentas</button>
+       <section id="registroCuentas" class="registro" style="display:none">
+
+            <div class="saldo">
+                <p>Saldo disponible</p>
+                <h3 id="saldoActual">$ 0 COP</h3>
+            </div>
+
+            <label for="tipoMovimiento">Tipo de movimiento</label>
+            <select id="tipoMovimiento">
+                <option value="ingreso">💚 Ingreso</option>
+                <option value="gasto">💗 Gasto</option>
+            </select>
+
+            <label for="conceptoMovimiento">Concepto</label>
+            <input type="text" id="conceptoMovimiento"
+                placeholder="Ej. Venta de un osito">
+
+            <label for="valorMovimiento">Valor (COP)</label>
+            <input type="number" id="valorMovimiento"
+                min="1" step="100" placeholder="Ej. 25000">
+
+            <button id="btnAgregarMovimiento">Añadir movimiento</button>
+
+            <p id="avisoMovimiento" hidden role="alert"></p>
+
+            <h3>📋 Historial de movimientos</h3>
+            <ul id="historialMovimientos"></ul>
+
+        <button id="btnLimpiarMovimientos">🗑️ Borrar historial</button>
+<button id="btnVolverCuentas">☾ Volver al inicio</button>
+        </section>
+    </main>
+
+    <section class="prueba-patron">
+        <p>✦ Un rincón para tus ideas ✦</p>
+        <p>🧶 Tus manualidades merecen su propio espacio.</p>
+        <p>🌙 Organiza tus cuentas con calma.</p>
+    </section>
+
+    <!-- Calculadora de productos -->
+    <section id="calculadora" class="calculadora" style="display:none">
+        <h2>🧶 Calculadora de costes</h2>
+        <p>Calcula cuánto vale tu trabajo.</p>
+
+        <label for="nombreProducto">Nombre del producto</label>
+        <input type="text" id="nombreProducto" placeholder="Ej. Osito tejido">
+
+        <h3>✦ Costes de materiales</h3>
+        <label for="costeMateriales">Coste total de materiales (COP)</label>
+        <input type="number" id="costeMateriales" min="0" step="100" placeholder="Ej. 18000">
+
+        <h3>✦ Mano de obra</h3>
+        <label for="horasTrabajo">Horas trabajadas</label>
+        <input type="number" id="horasTrabajo" min="0" step="0.5" placeholder="Ej. 4">
+
+        <label for="valorHora">Valor de tu hora de trabajo (COP)</label>
+        <input type="number" id="valorHora" min="0" step="100" placeholder="Ej. 5000">
+
+        <h3>✦ Costes adicionales</h3>
+        <label for="costesAdicionales">Otros costes (COP)</label>
+        <input type="number" id="costesAdicionales" min="0" step="100" placeholder="Ej. 2000">
+
+        <h3>✦ Ganancia deseada</h3>
+        <label for="porcentajeGanancia">Porcentaje de ganancia (%)</label>
+        <input type="number" id="porcentajeGanancia" min="0" step="1" value="25">
+
+        <button id="btnCalcular">Calcular precio</button>
+
+        <div id="resultado" class="resultado">
+            <h3>🌙 Tu presupuesto</h3>
+            <p>El precio final aparecerá aquí.</p>
+        </div>
+
+        <button id="btnCopiar">📋 Copiar presupuesto</button>
+        <p id="mensajeCopiar" hidden></p>
+        <div id="aviso" class="aviso" role="alert" hidden></div>
+        <button id="btnInicio">☾ Volver al inicio</button>
+    </section>
+
+    <!-- Calculadora de servicios -->
+    <section id="calculadoraServicios" class="calculadora" style="display:none">
+        <h2>🌙 Calculadora de servicios</h2>
+        <p>Calcula cuánto cobrar por tu trabajo.</p>
+
+        <label for="nombreServicio">Nombre del servicio</label>
+        <input type="text" id="nombreServicio" placeholder="Ej. Diseño personalizado">
+
+        <h3>✦ Tiempo de trabajo</h3>
+        <label for="horasServicio">Horas trabajadas</label>
+        <input type="number" id="horasServicio" min="0" step="0.5" placeholder="Ej. 3">
+
+        <label for="tarifaServicio">Valor de tu hora (COP)</label>
+        <input type="number" id="tarifaServicio" min="0" step="100" placeholder="Ej. 10000">
+
+        <h3>✦ Gastos adicionales</h3>
+        <label for="gastosServicio">Transporte, herramientas y otros gastos (COP)</label>
+        <input type="number" id="gastosServicio" min="0" step="100" placeholder="Ej. 5000">
+
+        <h3>✦ Ganancia deseada</h3>
+        <label for="gananciaServicio">Porcentaje de ganancia (%)</label>
+        <input type="number" id="gananciaServicio" min="0" step="1" value="25">
+
+        <button id="btnCalcularServicio">Calcular precio</button>
+
+        <div id="resultadoServicio" class="resultado">
+            <h3>💜 Tu presupuesto</h3>
+            <p>El precio final aparecerá aquí.</p>
+        </div>
+
+        <button id="btnCopiarServicio">📋 Copiar presupuesto</button>
+        <p id="mensajeCopiarServicio" hidden></p>
+        <div id="avisoServicio" class="aviso" role="alert" hidden></div>
+        <button id="btnVolverServicios">☾ Volver al inicio</button>
+    </section>
+
+
+<script>
+const pantallaInicio = document.getElementById("inicio");
+const patron = document.querySelector(".prueba-patron");
+const calculadora = document.getElementById("calculadora");
+const calculadoraServicios = document.getElementById("calculadoraServicios");
+const registroCuentas = document.getElementById("registroCuentas");
+
+const tituloInicio = pantallaInicio.querySelector("h2");
+const btnProductos = document.getElementById("btnProductos");
+const btnServicios = document.getElementById("btnServicios");
+const btnCuentas = document.getElementById("btnCuentas");
+
+function ocultarSecciones() {
+    calculadora.style.display = "none";
+    calculadoraServicios.style.display = "none";
+    registroCuentas.style.display = "none";
+}
+
+function irAlInicio() {
+    ocultarSecciones();
+    pantallaInicio.style.display = "block";
+    tituloInicio.style.display = "block";
+    btnProductos.style.display = "block";
+    btnServicios.style.display = "block";
+    btnCuentas.style.display = "block";
+    patron.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+btnProductos.addEventListener("click", function() {
+    ocultarSecciones();
+    pantallaInicio.style.display = "none";
+    patron.style.display = "none";
+    calculadora.style.display = "block";
+    document.getElementById("aviso").hidden = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+btnServicios.addEventListener("click", function() {
+    ocultarSecciones();
+    pantallaInicio.style.display = "none";
+    patron.style.display = "none";
+    calculadoraServicios.style.display = "block";
+    document.getElementById("avisoServicio").hidden = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+btnCuentas.addEventListener("click", function() {
+    ocultarSecciones();
+    pantallaInicio.style.display = "block";
+    tituloInicio.style.display = "none";
+    btnProductos.style.display = "none";
+    btnServicios.style.display = "none";
+    btnCuentas.style.display = "none";
+    patron.style.display = "none";
+    registroCuentas.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("btnInicio").addEventListener("click", irAlInicio);
+document.getElementById("btnVolverServicios").addEventListener("click", irAlInicio);
+document.getElementById("btnVolverCuentas").addEventListener("click", irAlInicio);
+
+function formatoCOP(valor) {
+    return "$ " + valor.toLocaleString("es-CO") + " COP";
+}
+
+// MIS CUENTAS: GUARDADO AUTOMÁTICO
+const CLAVE_CUENTAS = "blackBudgetCuentas";
+
+let saldo = 0;
+let movimientos = [];
+
+const tipoMovimiento = document.getElementById("tipoMovimiento");
+const conceptoMovimiento = document.getElementById("conceptoMovimiento");
+const valorMovimiento = document.getElementById("valorMovimiento");
+const saldoActual = document.getElementById("saldoActual");
+const historialMovimientos = document.getElementById("historialMovimientos");
+const avisoMovimiento = document.getElementById("avisoMovimiento");
+
+function guardarCuentas() {
+    try {
+        localStorage.setItem(CLAVE_CUENTAS, JSON.stringify({
+            saldo: saldo,
+            movimientos: movimientos
+        }));
+    } catch (error) {
+        console.error("No se pudieron guardar las cuentas.", error);
+        avisoMovimiento.textContent =
+            "No se pudieron guardar los datos en este navegador.";
+        avisoMovimiento.hidden = false;
+    }
+}
+
+function cargarCuentas() {
+    try {
+        const datos = localStorage.getItem(CLAVE_CUENTAS);
+
+        if (datos) {
+            const cuentas = JSON.parse(datos);
+
+            if (
+                cuentas &&
+                Number.isFinite(cuentas.saldo) &&
+                Array.isArray(cuentas.movimientos)
+            ) {
+                movimientos = cuentas.movimientos.filter(m =>
+                    m &&
+                    typeof m.concepto === "string" &&
+                    Number.isFinite(m.valor) &&
+                    m.valor > 0 &&
+                    (m.tipo === "ingreso" || m.tipo === "gasto")
+                );
+
+                saldo = movimientos.reduce((total, m) =>
+                    total + (m.tipo === "ingreso" ? m.valor : -m.valor), 0
+                );
+            }
+        }
+    } catch (error) {
+        console.error("No se pudieron cargar las cuentas.", error);
+    }
+}
+
+function mostrarMovimientos() {
+    saldoActual.textContent = formatoCOP(saldo);
+    historialMovimientos.replaceChildren();
+
+    movimientos.forEach(movimiento => {
+        const elemento = document.createElement("li");
+        elemento.textContent =
+            (movimiento.tipo === "ingreso" ? "💚 + " : "💗 − ") +
+            formatoCOP(movimiento.valor) +
+            " | " + movimiento.concepto;
+
+        historialMovimientos.append(elemento);
+    });
+}
+
+cargarCuentas();
+mostrarMovimientos();
+
+document.getElementById("btnAgregarMovimiento").addEventListener("click", function() {
+    const concepto = conceptoMovimiento.value.trim();
+    const valorTexto = valorMovimiento.value.trim();
+    const valor = Number(valorTexto);
+    const tipo = tipoMovimiento.value;
+
+    avisoMovimiento.hidden = true;
+
+    if (!concepto) {
+        avisoMovimiento.textContent = "🌙 Escribe el concepto del movimiento.";
+        avisoMovimiento.hidden = false;
+        conceptoMovimiento.focus();
+        return;
+    }
+
+    if (valorTexto === "" || !Number.isFinite(valor) || valor <= 0) {
+        avisoMovimiento.textContent = "🌙 Introduce un valor mayor que cero.";
+        avisoMovimiento.hidden = false;
+        valorMovimiento.focus();
+        return;
+    }
+
+    saldo += tipo === "ingreso" ? valor : -valor;
+    movimientos.push({ concepto: concepto, valor: valor, tipo: tipo });
+
+    guardarCuentas();
+    mostrarMovimientos();
+
+    conceptoMovimiento.value = "";
+    valorMovimiento.value = "";
+    conceptoMovimiento.focus();
+});
+
+document.getElementById("btnLimpiarMovimientos").addEventListener("click", function() {
+    if (!confirm("¿Quieres borrar todos los movimientos y dejar el saldo en cero?")) {
+        return;
+    }
+
+    saldo = 0;
+    movimientos = [];
+    guardarCuentas();
+    mostrarMovimientos();
+    avisoMovimiento.hidden = true;
+});
+
+// AVISOS
+function mostrarAviso(mensaje) {
+    const aviso = document.getElementById("aviso");
+    aviso.textContent = "🌙 " + mensaje;
+    aviso.hidden = false;
+}
+
+// CALCULADORA DE PRODUCTOS
+document.getElementById("btnCalcular").addEventListener("click", function() {
+    const ids = [
+        "costeMateriales",
+        "horasTrabajo",
+        "valorHora",
+        "costesAdicionales",
+        "porcentajeGanancia"
+    ];
+
+    for (const id of ids) {
+        const campo = document.getElementById(id);
+
+        if (
+            campo.value.trim() === "" ||
+            !Number.isFinite(Number(campo.value)) ||
+            Number(campo.value) < 0
+        ) {
+            mostrarAviso("Completa los campos con valores válidos y no negativos.");
+            campo.focus();
+            return;
+        }
+    }
+
+    const materiales = Number(document.getElementById("costeMateriales").value);
+    const horas = Number(document.getElementById("horasTrabajo").value);
+    const valorHora = Number(document.getElementById("valorHora").value);
+    const adicionales = Number(document.getElementById("costesAdicionales").value);
+    const porcentaje = Number(document.getElementById("porcentajeGanancia").value);
+    const nombre = document.getElementById("nombreProducto").value.trim();
+
+    if (materiales === 0 && horas === 0 && adicionales === 0) {
+        mostrarAviso("Introduce al menos un coste o algunas horas de trabajo.");
+        return;
+    }
+
+    const manoObra = horas * valorHora;
+    const total = materiales + manoObra + adicionales;
+    const ganancia = total * porcentaje / 100;
+    const precio = total + ganancia;
+
+    document.getElementById("aviso").hidden = true;
+
+    const resultado = document.getElementById("resultado");
+    resultado.replaceChildren();
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "🌙 Presupuesto de " + (nombre || "tu producto");
+    resultado.append(titulo);
+
+    [
+        ["Materiales", materiales],
+        ["Mano de obra", manoObra],
+        ["Costes adicionales", adicionales],
+        ["Coste total", total],
+        ["Ganancia", ganancia],
+        ["Precio final", precio]
+    ].forEach(([etiqueta, valor]) => {
+        const p = document.createElement("p");
+        p.textContent = etiqueta + ": " + formatoCOP(valor);
+        resultado.append(p);
+    });
+});
+
+// CALCULADORA DE SERVICIOS
+document.getElementById("btnCalcularServicio").addEventListener("click", function() {
+    const horas = document.getElementById("horasServicio");
+    const tarifa = document.getElementById("tarifaServicio");
+    const gastos = document.getElementById("gastosServicio");
+    const gananciaInput = document.getElementById("gananciaServicio");
+    const nombre = document.getElementById("nombreServicio").value.trim();
+    const aviso = document.getElementById("avisoServicio");
+
+    aviso.hidden = true;
+
+    for (const campo of [horas, tarifa, gastos, gananciaInput]) {
+        if (
+            campo.value.trim() === "" ||
+            !Number.isFinite(Number(campo.value)) ||
+            Number(campo.value) < 0
+        ) {
+            aviso.textContent = "🌙 Completa los campos con valores válidos y no negativos.";
+            aviso.hidden = false;
+            campo.focus();
+            return;
+        }
+    }
+
+    const tiempo = Number(horas.value);
+    const valorHora = Number(tarifa.value);
+    const gastosTotal = Number(gastos.value);
+    const porcentaje = Number(gananciaInput.value);
+
+    if (tiempo === 0 && gastosTotal === 0) {
+        aviso.textContent = "🌙 Introduce horas de trabajo o algún gasto.";
+        aviso.hidden = false;
+        return;
+    }
+
+    const manoObra = tiempo * valorHora;
+    const total = manoObra + gastosTotal;
+    const ganancia = total * porcentaje / 100;
+    const precio = total + ganancia;
+
+    const resultado = document.getElementById("resultadoServicio");
+    resultado.replaceChildren();
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "💜 Presupuesto de " + (nombre || "tu servicio");
+    resultado.append(titulo);
+
+    [
+        ["Mano de obra", manoObra],
+        ["Gastos adicionales", gastosTotal],
+        ["Coste total", total],
+        ["Ganancia", ganancia],
+        ["Precio final", precio]
+    ].forEach(([etiqueta, valor]) => {
+        const p = document.createElement("p");
+        p.textContent = etiqueta + ": " + formatoCOP(valor);
+        resultado.append(p);
+    });
+});
+
+// COPIAR PRESUPUESTOS
+async function copiarPresupuesto(idResultado, idMensaje) {
+    const texto = document.getElementById(idResultado).innerText;
+    const mensaje = document.getElementById(idMensaje);
+
+    try {
+        await navigator.clipboard.writeText(texto);
+        mensaje.textContent = "💜 ¡Presupuesto copiado!";
+    } catch (error) {
+        mensaje.textContent =
+            "No se pudo copiar automáticamente. Mantén pulsado el texto para copiarlo.";
+    }
+
+    mensaje.hidden = false;
+}
+
+document.getElementById("btnCopiar").addEventListener("click", function() {
+    copiarPresupuesto("resultado", "mensajeCopiar");
+});
+
+document.getElementById("btnCopiarServicio").addEventListener("click", function() {
+    copiarPresupuesto("resultadoServicio", "mensajeCopiarServicio");
+});
+</script>
+
+</body>
+</html>
