@@ -439,7 +439,7 @@ display: none;
     overflow: hidden;
     opacity: 0.18;
 
-    background-image: url("./images/papel%20tapiz.png");
+    background-image: url("./images/papetapizweb.png");
     background-repeat: repeat;
     background-size: 380px auto;
     background-position: top left;
@@ -556,7 +556,7 @@ display: none;
             rgba(12, 7, 24, 0.30),
             rgba(12, 7, 24, 0.58)
         ),
-        url("images/fondo de fantasia.jpg");
+        url("images/BosqueEncantado.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
