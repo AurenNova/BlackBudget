@@ -445,6 +445,108 @@ document.getElementById("btnCalcular").addEventListener("click", function() {
     });
 });
 
+/* CALCULADORA DE SERVICIOS Y COMISIONES */
+document.getElementById("btnCalcularServicio").addEventListener("click", function() {
+    const ids = [
+        "horasServicio",
+        "tarifaServicio",
+        "gastosServicio",
+        "gananciaServicio",
+        "cantidadServicios"
+    ];
+
+    // Validar los campos
+    for (const id of ids) {
+        const campo = document.getElementById(id);
+
+        if (
+            !campo ||
+            campo.value.trim() === "" ||
+            !Number.isFinite(Number(campo.value)) ||
+            Number(campo.value) < 0
+        ) {
+            mostrarAvisoServicio(
+                "Completa los campos con valores válidos y no negativos."
+            );
+
+            if (campo) campo.focus();
+            return;
+        }
+    }
+
+    // Obtener los valores
+    const horas = Number(document.getElementById("horasServicio").value);
+    const tarifa = Number(document.getElementById("tarifaServicio").value);
+    const gastos = Number(document.getElementById("gastosServicio").value);
+    const porcentaje = Number(document.getElementById("gananciaServicio").value);
+    const cantidad = Number(document.getElementById("cantidadServicios").value);
+    const nombre = document.getElementById("nombreServicio").value.trim();
+
+    // Validar la cantidad de comisiones
+    if (!Number.isInteger(cantidad) || cantidad < 1) {
+        mostrarAvisoServicio(
+            "Introduce una cantidad entera de al menos 1 comisión."
+        );
+        document.getElementById("cantidadServicios").focus();
+        return;
+    }
+
+    // Comprobar que exista algún coste
+    if (horas === 0 && gastos === 0) {
+        mostrarAvisoServicio(
+            "Introduce horas de trabajo o algún gasto adicional."
+        );
+        return;
+    }
+
+    // Calcular el precio del trabajo completo
+    const manoObra = horas * tarifa;
+    const costeTotal = manoObra + gastos;
+    const ganancia = costeTotal * porcentaje / 100;
+    const precioTotal = costeTotal + ganancia;
+
+    // Calcular el precio de cada comisión
+    const costeUnitario = costeTotal / cantidad;
+    const gananciaUnitaria = ganancia / cantidad;
+    const precioUnitario = precioTotal / cantidad;
+
+    // Mostrar resultados
+    document.getElementById("avisoServicio").hidden = true;
+
+    const resultado = document.getElementById("resultadoServicio");
+    resultado.replaceChildren();
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "💜 Presupuesto de " + (nombre || "tu servicio");
+    resultado.append(titulo);
+
+    [
+        ["Cantidad de comisiones", cantidad + " comisiones"],
+        ["Mano de obra total", manoObra],
+        ["Gastos adicionales totales", gastos],
+        ["Coste total", costeTotal],
+        ["Ganancia total", ganancia],
+        ["Precio total de las comisiones", precioTotal],
+        ["Coste por comisión", costeUnitario],
+        ["Ganancia por comisión", gananciaUnitaria],
+        ["Precio por comisión", precioUnitario]
+    ].forEach(([etiqueta, valor]) => {
+        const p = document.createElement("p");
+
+        p.textContent = etiqueta + ": " +
+            (typeof valor === "number" ? formatoCOP(valor) : valor);
+
+        resultado.append(p);
+    });
+});
+
+// Mostrar avisos de la calculadora de servicios
+function mostrarAvisoServicio(mensaje) {
+    const aviso = document.getElementById("avisoServicio");
+    aviso.textContent = "🌙 " + mensaje;
+    aviso.hidden = false;
+}
+
 </script>
 
 </body>
