@@ -400,4 +400,124 @@ $("btnCalcularServicio").addEventListener("click", () => {
   $("avisoServicio").hidden = true;
   const resultado = $("resultadoServicio"); resultado.replaceChildren();
   const h = document.createElement("h3"); h.textContent = "💜 Presupuesto de " + nombre; resultado.append(h);
-  [["Mano de obra", manoObra], ["Gastos adicionales", gastos], ["Coste total", costeT
+  
+    [
+      ["Mano de obra", manoObra],
+      ["Gastos adicionales", gastos],
+      ["Coste total", costeTotal],
+      ["Ganancia", ganancia],
+      ["Precio final", precioTotal]
+    ].forEach(([etiqueta, valor]) => {
+      const p = document.createElement("p");
+      p.textContent = etiqueta + ": " + formatoCOP(valor);
+      resultado.append(p);
+    });
+});
+
+$("btnGuardarServicio").addEventListener("click", async () => {
+  if (!ultimoServicio) {
+    return aviso("mensajeGuardarServicio", "Primero calcula una comisión.");
+  }
+
+  try {
+    await addDoc(rutaUsuario("commissions"), {
+      ...ultimoServicio,
+      createdAt: serverTimestamp()
+    });
+
+    aviso("mensajeGuardarServicio", "💜 Comisión guardada en tu cuenta.");
+    await cargarComisiones();
+  } catch (e) {
+    aviso("mensajeGuardarServicio", "No se pudo guardar: " + e.message);
+  }
+});
+
+async function cargarComisiones() {
+  if (!usuario) return;
+
+  try {
+    const snap = await getDocs(
+      query(rutaUsuario("commissions"), orderBy("createdAt", "desc"))
+    );
+
+    comisiones = snap.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    }));
+
+    renderLista($("listaComisiones"), comisiones, comision => {
+      const li = document.createElement("li");
+      const texto = document.createElement("span");
+
+      texto.textContent =
+        comision.nombre + " · " + formatoCOP(comision.precioTotal);
+
+      const boton = document.createElement("button");
+      boton.type = "button";
+      boton.textContent = "Eliminar";
+
+      boton.addEventListener("click", async () => {
+        if (!confirm("¿Eliminar esta comisión guardada?")) return;
+
+        try {
+          await deleteDoc(
+            doc(db, "users", usuario.uid, "commissions", comision.id)
+          );
+
+          await cargarComisiones();
+        } catch (e) {
+          aviso("avisoServicio", "No se pudo eliminar: " + e.message);
+        }
+      });
+
+      li.append(texto, boton);
+      return li;
+    });
+  } catch (e) {
+    aviso("avisoServicio", "No se pudieron cargar las comisiones: " + e.message);
+  }
+}
+
+$("btnCopiar").addEventListener("click", async () => {
+  if (!ultimoProducto) {
+    return aviso("aviso", "Primero calcula un presupuesto.");
+  }
+
+  const p = ultimoProducto;
+  const texto =
+    "Presupuesto: " + p.nombre + "\n" +
+    "Coste total: " + formatoCOP(p.costeTotal) + "\n" +
+    "Ganancia: " + formatoCOP(p.ganancia) + "\n" +
+    "Precio total: " + formatoCOP(p.precioTotal) + "\n" +
+    "Precio por unidad: " + formatoCOP(p.precioUnitario);
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    aviso("mensajeCopiar", "Presupuesto copiado.");
+  } catch (e) {
+    aviso("mensajeCopiar", "No se pudo copiar automáticamente.");
+  }
+});
+
+$("btnCopiarServicio").addEventListener("click", async () => {
+  if (!ultimoServicio) {
+    return aviso("mensajeCopiarServicio", "Primero calcula una comisión.");
+  }
+
+  const s = ultimoServicio;
+  const texto =
+    "Comisión: " + s.nombre + "\n" +
+    "Coste total: " + formatoCOP(s.costeTotal) + "\n" +
+    "Ganancia: " + formatoCOP(s.ganancia) + "\n" +
+    "Precio final: " + formatoCOP(s.precioTotal);
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    aviso("mensajeCopiarServicio", "Presupuesto copiado.");
+  } catch (e) {
+    aviso("mensajeCopiarServicio", "No se pudo copiar automáticamente.");
+  }
+});
+</script>
+</body>
+</html>
