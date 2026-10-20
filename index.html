@@ -112,53 +112,26 @@
         <div id="aviso" class="aviso" role="alert" hidden></div>
         <button id="btnInicio">☾ Volver al inicio</button>
     </section>
-
+        
     <!-- Calculadora de servicios -->
     <section id="calculadoraServicios" class="calculadora" style="display:none">
-       <h2>🌙 Calculadora de precios para servicios y comisiones artísticas</h2>
+        <h2>🌙 Calculadora de precios para servicios y comisiones artísticas</h2>
         <p>Calcula cuánto cobrar por tu trabajo.</p>
 
         <label for="nombreServicio">Nombre del servicio</label>
-
-<label for="cantidadServicios">Cantidad de comisiones</label>
-<input
-    type="number"
-    id="cantidadServicios"
-    min="1"
-    step="1"
-    value="1"
-    placeholder="Ej. 3"
->
         <input type="text" id="nombreServicio" placeholder="Ej. Diseño personalizado">
 
-        <h3>✦ Tiempo de trabajo</h3>
-        <label for="horasServicio">Horas trabajadas</label>
-        <input type="number" id="horasServicio" min="0" step="0.5" placeholder="Ej. 3">
+        <label for="cantidadServicios">Cantidad de comisiones</label>
+        <input
+            type="number"
+            id="cantidadServicios"
+            min="1"
+            step="1"
+            value="1"
+            placeholder="Ej. 3"
+        >
 
-        <label for="tarifaServicio">Valor de tu hora (COP)</label>
-        <input type="number" id="tarifaServicio" min="0" step="100" placeholder="Ej. 10000">
-
-        <h3>✦ Gastos adicionales</h3>
-        <label for="gastosServicio">Transporte, herramientas y otros gastos (COP)</label>
-        <input type="number" id="gastosServicio" min="0" step="100" placeholder="Ej. 5000">
-
-        <h3>✦ Ganancia deseada</h3>
-        <label for="gananciaServicio">Porcentaje de ganancia (%)</label>
-        <input type="number" id="gananciaServicio" min="0" step="1" value="25">
-
-        <button id="btnCalcularServicio">Calcular precio</button>
-
-        <div id="resultadoServicio" class="resultado">
-            <h3>💜 Tu presupuesto</h3>
-            <p>El precio final aparecerá aquí.</p>
-        </div>
-
-        <button id="btnCopiarServicio">📋 Copiar presupuesto</button>
-        <p id="mensajeCopiarServicio" hidden></p>
-        <div id="avisoServicio" class="aviso" role="alert" hidden></div>
-        <button id="btnVolverServicios">☾ Volver al inicio</button>
-    </section>
-
+        <!-- Desde aquí continúa tu código actual -->
 
 <script>
 const pantallaInicio = document.getElementById("inicio");
