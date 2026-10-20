@@ -131,6 +131,35 @@
             placeholder="Ej. 3"
         >
 
+        <h3>✦ Tiempo de trabajo</h3>
+        <label for="horasServicio">Horas trabajadas</label>
+        <input type="number" id="horasServicio" min="0" step="0.5" placeholder="Ej. 3">
+
+        <label for="tarifaServicio">Valor de tu hora (COP)</label>
+        <input type="number" id="tarifaServicio" min="0" step="100" placeholder="Ej. 10000">
+
+        <h3>✦ Gastos adicionales</h3>
+        <label for="gastosServicio">Transporte, herramientas y otros gastos (COP)</label>
+        <input type="number" id="gastosServicio" min="0" step="100" placeholder="Ej. 5000">
+
+        <h3>✦ Ganancia deseada</h3>
+        <label for="gananciaServicio">Porcentaje de ganancia (%)</label>
+        <input type="number" id="gananciaServicio" min="0" step="1" value="25">
+
+        <button id="btnCalcularServicio">Calcular precio</button>
+
+        <div id="resultadoServicio" class="resultado">
+            <h3>💜 Tu presupuesto</h3>
+            <p>El precio final aparecerá aquí.</p>
+        </div>
+
+        <button id="btnCopiarServicio">📋 Copiar presupuesto</button>
+        <p id="mensajeCopiarServicio" hidden></p>
+        <div id="avisoServicio" class="aviso" role="alert" hidden></div>
+
+        <button id="btnVolverServicios">☾ Volver al inicio</button>
+    </section>
+
 <script>
 const pantallaInicio = document.getElementById("inicio");
 const patron = document.querySelector(".prueba-patron");
