@@ -334,16 +334,18 @@ function mostrarAviso(mensaje) {
     aviso.hidden = false;
 }
 
-// CALCULADORA DE PRODUCTOS
+/* CALCULADORA DE PRODUCTOS */
 document.getElementById("btnCalcular").addEventListener("click", function() {
     const ids = [
         "costeMateriales",
         "horasTrabajo",
         "valorHora",
         "costesAdicionales",
-        "porcentajeGanancia"
+        "porcentajeGanancia",
+        "cantidadProductos"
     ];
 
+    // Validar los campos
     for (const id of ids) {
         const campo = document.getElementById(id);
 
@@ -352,135 +354,106 @@ document.getElementById("btnCalcular").addEventListener("click", function() {
             !Number.isFinite(Number(campo.value)) ||
             Number(campo.value) < 0
         ) {
-            mostrarAviso("Completa los campos con valores válidos y no negativos.");
+            mostrarAviso(
+                "Completa los campos con valores válidos y no negativos."
+            );
             campo.focus();
             return;
         }
     }
 
-    const materiales = Number(document.getElementById("costeMateriales").value);
-    const horas = Number(document.getElementById("horasTrabajo").value);
-    const valorHora = Number(document.getElementById("valorHora").value);
-    const adicionales = Number(document.getElementById("costesAdicionales").value);
-    const porcentaje = Number(document.getElementById("porcentajeGanancia").value);
+    // Obtener los valores
+    const materiales = Number(
+        document.getElementById("costeMateriales").value
+    );
+
+    const horas = Number(
+        document.getElementById("horasTrabajo").value
+    );
+
+    const valorHora = Number(
+        document.getElementById("valorHora").value
+    );
+
+    const adicionales = Number(
+        document.getElementById("costesAdicionales").value
+    );
+
+    const porcentaje = Number(
+        document.getElementById("porcentajeGanancia").value
+    );
+
+    const cantidad = Number(
+        document.getElementById("cantidadProductos").value
+    );
+
     const nombre = document.getElementById("nombreProducto").value.trim();
 
-    if (materiales === 0 && horas === 0 && adicionales === 0) {
-        mostrarAviso("Introduce al menos un coste o algunas horas de trabajo.");
+    // Validar la cantidad de unidades
+    if (!Number.isInteger(cantidad) || cantidad < 1) {
+        mostrarAviso(
+            "Introduce una cantidad entera de al menos 1 unidad."
+        );
+
+        document.getElementById("cantidadProductos").focus();
         return;
     }
 
+    // Comprobar que haya algún coste
+    if (materiales === 0 && horas === 0 && adicionales === 0) {
+        mostrarAviso(
+            "Introduce al menos un coste o algunas horas de trabajo."
+        );
+        return;
+    }
+
+    // Calcular los costes del trabajo completo
     const manoObra = horas * valorHora;
     const total = materiales + manoObra + adicionales;
     const ganancia = total * porcentaje / 100;
     const precio = total + ganancia;
 
+    // Calcular los valores por unidad
+    const costeUnitario = total / cantidad;
+    const gananciaUnitaria = ganancia / cantidad;
+    const precioUnitario = precio / cantidad;
+
+    // Ocultar el aviso de error
     document.getElementById("aviso").hidden = true;
 
+    // Limpiar resultados anteriores
     const resultado = document.getElementById("resultado");
     resultado.replaceChildren();
 
+    // Crear el título del resultado
     const titulo = document.createElement("h3");
     titulo.textContent = "🌙 Presupuesto de " + (nombre || "tu producto");
     resultado.append(titulo);
 
+    // Mostrar los resultados
     [
-        ["Materiales", materiales],
-        ["Mano de obra", manoObra],
-        ["Costes adicionales", adicionales],
-        ["Coste total", total],
-        ["Ganancia", ganancia],
-        ["Precio final", precio]
+        ["Cantidad fabricada", cantidad + " unidades"],
+        ["Materiales (trabajo completo)", materiales],
+        ["Mano de obra (trabajo completo)", manoObra],
+        ["Costes adicionales (trabajo completo)", adicionales],
+        ["Coste total del trabajo", total],
+        ["Ganancia total", ganancia],
+        ["Precio de venta total", precio],
+        ["Coste por unidad", costeUnitario],
+        ["Ganancia por unidad", gananciaUnitaria],
+        ["Precio de venta por unidad", precioUnitario]
     ].forEach(([etiqueta, valor]) => {
         const p = document.createElement("p");
-        p.textContent = etiqueta + ": " + formatoCOP(valor);
+
+        p.textContent = etiqueta + ": " +
+            (typeof valor === "number"
+                ? formatoCOP(valor)
+                : valor);
+
         resultado.append(p);
     });
 });
 
-// CALCULADORA DE SERVICIOS
-document.getElementById("btnCalcularServicio").addEventListener("click", function() {
-    const horas = document.getElementById("horasServicio");
-    const tarifa = document.getElementById("tarifaServicio");
-    const gastos = document.getElementById("gastosServicio");
-    const gananciaInput = document.getElementById("gananciaServicio");
-    const nombre = document.getElementById("nombreServicio").value.trim();
-    const aviso = document.getElementById("avisoServicio");
-
-    aviso.hidden = true;
-
-    for (const campo of [horas, tarifa, gastos, gananciaInput]) {
-        if (
-            campo.value.trim() === "" ||
-            !Number.isFinite(Number(campo.value)) ||
-            Number(campo.value) < 0
-        ) {
-            aviso.textContent = "🌙 Completa los campos con valores válidos y no negativos.";
-            aviso.hidden = false;
-            campo.focus();
-            return;
-        }
-    }
-
-    const tiempo = Number(horas.value);
-    const valorHora = Number(tarifa.value);
-    const gastosTotal = Number(gastos.value);
-    const porcentaje = Number(gananciaInput.value);
-
-    if (tiempo === 0 && gastosTotal === 0) {
-        aviso.textContent = "🌙 Introduce horas de trabajo o algún gasto.";
-        aviso.hidden = false;
-        return;
-    }
-
-    const manoObra = tiempo * valorHora;
-    const total = manoObra + gastosTotal;
-    const ganancia = total * porcentaje / 100;
-    const precio = total + ganancia;
-
-    const resultado = document.getElementById("resultadoServicio");
-    resultado.replaceChildren();
-
-    const titulo = document.createElement("h3");
-    titulo.textContent = "💜 Presupuesto de " + (nombre || "tu servicio");
-    resultado.append(titulo);
-
-    [
-        ["Mano de obra", manoObra],
-        ["Gastos adicionales", gastosTotal],
-        ["Coste total", total],
-        ["Ganancia", ganancia],
-        ["Precio final", precio]
-    ].forEach(([etiqueta, valor]) => {
-        const p = document.createElement("p");
-        p.textContent = etiqueta + ": " + formatoCOP(valor);
-        resultado.append(p);
-    });
-});
-
-// COPIAR PRESUPUESTOS
-async function copiarPresupuesto(idResultado, idMensaje) {
-    const texto = document.getElementById(idResultado).innerText;
-    const mensaje = document.getElementById(idMensaje);
-
-    try {
-        await navigator.clipboard.writeText(texto);
-        mensaje.textContent = "💜 ¡Presupuesto copiado!";
-    } catch (error) {
-        mensaje.textContent =
-            "No se pudo copiar automáticamente. Mantén pulsado el texto para copiarlo.";
-    }
-
-    mensaje.hidden = false;
-}
-
-document.getElementById("btnCopiar").addEventListener("click", function() {
-    copiarPresupuesto("resultado", "mensajeCopiar");
-});
-
-document.getElementById("btnCopiarServicio").addEventListener("click", function() {
-    copiarPresupuesto("resultadoServicio", "mensajeCopiarServicio");
-});
 </script>
 
 </body>
