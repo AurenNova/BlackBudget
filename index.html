@@ -403,8 +403,9 @@
 
     async function eliminarDocumento(nombreColeccion, id, recargar, destino) {
       if (!usuario) return estado("Inicia sesión para continuar.", destino);
-      if (!confirm("¿Quieres eliminar este registro? Esta acción no se puede deshacer."))
-
+      if (!confirm("¿Quieres eliminar este registro? Esta acción no se puede deshacer.")) {
+  return;
+}
       try {
         await deleteDoc(
           doc(db, "users", usuario.uid, nombreColeccion, id)
