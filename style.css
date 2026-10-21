@@ -1,96 +1,300 @@
-/* BlackBudget: estética oscura, lunar y violeta */
+
+/* =========================================
+   BLACKBUDGET | Estética oscura, lunar y violeta
+   ========================================= */
+
 :root {
   --fondo: #17131F;
   --lavanda: #C8B5F5;
   --morado: #8B5FC7;
   --superficie: #2B2338;
+  --texto: #F2F0F7;
+  --texto-suave: #D8D0E8;
+  --borde: #59466F;
+  --sombra: rgba(139, 95, 199, 0.20);
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
   background: var(--fondo);
-  color: #F2F0F7;
+  color: var(--texto);
   font-family: Arial, sans-serif;
+  line-height: 1.5;
 }
+
+/* Encabezado */
+
 header {
   position: relative;
   text-align: center;
   padding: 30px 14px;
   background: var(--fondo);
   border-bottom: 1px solid var(--morado);
-  box-shadow: 0 4px 14px #8B5FC722;
+  box-shadow: 0 4px 14px rgba(139, 95, 199, 0.13);
 }
+
 h1 {
+  margin: 0 0 10px;
   color: var(--lavanda);
   letter-spacing: 2px;
   font-size: clamp(1.7rem, 6vw, 2rem);
-  text-shadow: 0 0 10px #8B5FC755;
+  text-shadow: 0 0 10px rgba(139, 95, 199, 0.33);
 }
-header p::before, header p::after { content: " ✦ "; color: var(--lavanda); }
-h2 { color: var(--lavanda); font-size: 1.35rem; }
-h3 { color: var(--lavanda); }
-p, label { color: #D8D0E8; line-height: 1.5; }
+
+header p {
+  margin: 0;
+}
+
+header p::before,
+header p::after {
+  content: " ✦ ";
+  color: var(--lavanda);
+}
+
+h2 {
+  color: var(--lavanda);
+  font-size: 1.35rem;
+}
+
+h3 {
+  color: var(--lavanda);
+}
+
+p,
+label {
+  color: var(--texto-suave);
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+/* Contenido principal */
+
 main {
-  max-width: 720px;
+  width: min(100% - 24px, 760px);
   margin: 24px auto;
   padding: 22px 16px;
   background: var(--superficie);
   border: 1px solid var(--morado);
   border-radius: 18px;
-  box-shadow: 0 0 18px #8B5FC733;
+  box-shadow: 0 0 18px rgba(139, 95, 199, 0.12);
 }
+
+#estadoGeneral {
+  overflow-wrap: anywhere;
+}
+
+/* Botones generales */
+
 button {
   display: block;
   width: 100%;
   margin: 12px 0;
-  padding: 14px;
-  color: #fbf7ff;
+  padding: 13px 14px;
+  color: #FBF7FF;
   background: linear-gradient(135deg, #8B5FC7, #65409A);
   border: 1px solid var(--lavanda);
   border-radius: 12px;
-  font-size: 1rem;
+  font: inherit;
   font-weight: bold;
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow-wrap: anywhere;
 }
-button:hover { box-shadow: 0 0 16px #C8B5F555; background: #9B72D6; }
-button:active { transform: scale(.98); }
-input, select, textarea {
+
+button:hover {
+  box-shadow: 0 0 16px rgba(200, 181, 245, 0.30);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--lavanda);
+  outline-offset: 3px;
+}
+
+/* Navegación entre secciones */
+
+nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+
+nav button {
+  min-height: 54px;
+  margin: 0;
+  padding: 11px 8px;
+  background: linear-gradient(
+    135deg,
+    #231535,
+    #5B367E,
+    #1F132F
+  );
+  border-color: #8F6BB3;
+  font-size: 0.95rem;
+}
+
+/* Formularios e inputs */
+
+input,
+select,
+textarea {
   display: block;
   width: 100%;
+  min-width: 0;
   margin: 6px 0 14px;
   padding: 12px;
-  background: #17131F;
-  color: #F2F0F7;
+  background: var(--fondo);
+  color: var(--texto);
   border: 1px solid #7965A8;
   border-radius: 10px;
   font: inherit;
 }
-input::placeholder { color: #A99BBF; }
-input:focus, select:focus, textarea:focus { outline: 2px solid var(--lavanda); outline-offset: 2px; }
-label { display: block; margin-top: 12px; }
-[hidden] { display: none !important; }
-.calculadora, .registro, .panel-auth {
-  max-width: 520px;
+
+input::placeholder,
+textarea::placeholder {
+  color: #A99BBF;
+  opacity: 1;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--lavanda);
+  outline-offset: 2px;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Ocultar elementos de manera fiable */
+
+[hidden] {
+  display: none !important;
+}
+
+/* Paneles y calculadoras */
+
+.calculadora,
+.registro,
+.panel-auth {
+  width: 100%;
+  max-width: 560px;
+  min-width: 0;
   margin: 26px auto;
   padding: 22px 18px;
   background: var(--superficie);
   border: 1px solid var(--morado);
   border-radius: 22px;
-  box-shadow: 0 0 22px rgba(139,95,199,.18);
+  box-shadow: 0 0 22px var(--sombra);
 }
-.calculadora h2, .panel-auth h2 { text-align: center; }
-.calculadora > p { text-align: center; margin-bottom: 24px; }
-.calculadora h3 { margin-top: 24px; padding-bottom: 8px; border-bottom: 1px solid #C8B5F540; }
-.resultado {
+
+.panel-auth h2,
+.calculadora h2 {
+  text-align: center;
+}
+
+.calculadora > p {
+  margin-bottom: 20px;
+}
+
+.calculadora h3 {
   margin-top: 24px;
-  padding: 16px;
-  background: #17131F;
-  border: 1px solid #59466F;
-  border-radius: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(200, 181, 245, 0.25);
+}
+
+/* Panel de inicio */
+
+#vistaInicio {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--superficie);
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(12, 7, 24, 0.48),
+      rgba(12, 7, 24, 0.76)
+    ),
+    url("images/BosqueEncantado.png");
+  background-size: cover;
+  background-position: center;
+  border-color: #8F6BB3;
+}
+
+#vistaInicio > h2 {
+  color: #F0E5FF;
+  text-align: center;
+  text-shadow: 0 0 8px #A56BFF;
+}
+
+#vistaInicio > p {
+  text-align: center;
+}
+
+/* Resultados */
+
+#resultadoProducto,
+#resultadoComision,
+#resumenMovimientos {
+  margin-top: 20px;
+}
+
+.resultado,
+#resultadoProducto:not(:empty),
+#resultadoComision:not(:empty),
+#resumenMovimientos:not(:empty) {
   overflow-wrap: anywhere;
 }
-.resultado p { color: #E7DFF5; line-height: 1.6; }
+
+.resultado {
+  padding: 16px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+}
+
+.resultado p {
+  color: #E7DFF5;
+  line-height: 1.6;
+}
+
+/* Mensajes de estado */
+
+.aviso,
+#estadoAuth,
+#avisoProducto,
+#avisoComision,
+#avisoMovimiento {
+  overflow-wrap: anywhere;
+}
+
 .aviso {
   padding: 12px;
   margin: 14px 0;
@@ -100,74 +304,149 @@ label { display: block; margin-top: 12px; }
   border-radius: 12px;
   line-height: 1.5;
 }
+
+#estadoAuth:empty,
+#avisoProducto:empty,
+#avisoComision:empty,
+#avisoMovimiento:empty {
+  display: none;
+}
+
+/* Resumen de ingresos y gastos */
+
 .saldo {
-  text-align: center;
   padding: 14px;
-  background: #17131F;
+  background: var(--fondo);
   border: 1px solid var(--morado);
   border-radius: 14px;
+  text-align: center;
 }
-.saldo h3 { font-size: 1.5rem; }
-ul { padding-left: 20px; }
+
+.saldo h3 {
+  font-size: 1.5rem;
+}
+
+/* Listas de registros */
+
+ul {
+  padding-left: 20px;
+}
+
 li {
   margin: 10px 0;
-  padding: 10px;
-  background: #17131F;
-  border: 1px solid #59466F;
+  padding: 12px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
   border-radius: 10px;
   color: #E7DFF5;
   overflow-wrap: anywhere;
+  word-break: normal;
 }
-li .boton-pequeno {
+
+li strong {
+  color: var(--lavanda);
+}
+
+li span {
+  color: var(--texto-suave);
+}
+
+/* Botones dentro de los registros, como Eliminar */
+
+li button {
   display: inline-block;
   width: auto;
-  margin: 8px 0 0;
+  max-width: 100%;
+  margin: 10px 0 0;
   padding: 8px 12px;
-  font-size: .85rem;
+  font-size: 0.85rem;
+  background: #392744;
+  border-color: #B58AE8;
 }
-.prueba-patron {
-  max-width: 700px;
-  margin: 24px auto;
-  padding: 18px;
+
+/* Cuenta activa */
+
+#usuarioActual {
+  color: var(--lavanda);
+  overflow-wrap: anywhere;
+}
+
+#zonaApp > .panel-auth {
+  margin-top: 18px;
+}
+
+/* Pie de página */
+
+footer {
+  padding: 8px 16px 24px;
   text-align: center;
-  border: 1px solid #8f6bb3;
-  border-radius: 18px;
-  box-shadow: 0 0 18px #75449b44;
 }
+
+footer p {
+  color: #A99BBF;
+  font-size: 0.9rem;
+}
+
+/* Decoración opcional si existe un elemento .decoraciones */
+
 .decoraciones {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: .18;
-  background-image: url("./images/Papeltapizweb.png");
+  opacity: 0.18;
+  background-image: url("images/Papeltapizweb.png");
   background-repeat: repeat;
   background-size: 380px auto;
 }
-#inicio {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background-image: linear-gradient(to bottom, rgba(12,7,24,.30), rgba(12,7,24,.58)), url("images/BosqueEncantado.png");
-  background-size: cover;
-  background-position: center;
-  border-color: #8f6bb3;
-}
-#inicio > h2 { text-align: center; color: #f0e5ff; text-shadow: 0 0 8px #a56bff; }
-#btnProductos, #btnServicios, #btnCuentas {
-  width: 90%;
-  max-width: 360px;
-  margin: 16px auto;
-  background: linear-gradient(135deg, rgba(35,21,53,.96), rgba(91,54,126,.93), rgba(31,19,47,.96));
-}
-.usuario-actual { text-align: center; overflow-wrap: anywhere; }
-.auth-botones { margin-top: 12px; }
+
+/* Adaptación a teléfonos */
+
 @media (max-width: 560px) {
-  main { margin: 16px 10px; padding: 18px 12px; }
-  .calculadora, .registro, .panel-auth { width: calc(100% - 20px); padding: 18px 14px; }
-  .decoraciones { background-size: 320px auto; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  header {
+    padding: 24px 12px;
+  }
+
+  main {
+    width: calc(100% - 20px);
+    margin: 16px auto;
+    padding: 16px 12px;
+  }
+
+  .calculadora,
+  .registro,
+  .panel-auth {
+    margin: 18px auto;
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+
+  nav {
+    gap: 7px;
+  }
+
+  nav button {
+    font-size: 0.9rem;
+    padding: 10px 6px;
+  }
+
+  .decoraciones {
+    background-size: 320px auto;
+  }
+
+  li {
+    padding: 10px;
+  }
 }
 
+/* Accesibilidad: reducir animaciones si se solicita */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
