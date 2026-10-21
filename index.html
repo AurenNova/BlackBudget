@@ -143,14 +143,23 @@
       serverTimestamp, query, orderBy
     } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCpmVNajN7po6YctsSgNUVahZfW6HwFGm4",
-      authDomain: "blackbudget-2b1fc.firebaseapp.com",
-      projectId: "blackbudget-2b1fc",
-      storageBucket: "blackbudget-2b1fc.firebasestorage.app",
-      messagingSenderId: "12308959683",
-      appId: "1:12308959683:web:8bccd2f691f3bcc72cad76"
-    };
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCpmVNajN7po6YctsSgqNUVahWZ6HwFGm4",
+  authDomain: "blackbudget-2b1fc.firebaseapp.com",
+  projectId: "blackbudget-2b1fc",
+  storageBucket: "blackbudget-2b1fc.firebasestorage.app",
+  messagingSenderId: "12308959683",
+  appId: "1:12308959683:web:8bccd2f691f3bcc72cad76"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig); 
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
