@@ -285,6 +285,8 @@ $("btnLogout").textContent = conectado
   ? "Cerrar sesión (conectada)"
   : "Sin sesión";
   if (conectado) {
+$("btnLogout").addEventListener("click", async () => {
+  alert("El botón responde al clic");
     $("usuarioActual").textContent = "Sesión iniciada: " + (user.email || "Google");
     restablecerInicio();
     ocultarSecciones();
