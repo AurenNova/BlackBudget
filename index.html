@@ -248,9 +248,20 @@ $("btnGoogle").addEventListener("click", async () => {
   try { await signInWithPopup(auth, googleProvider); }
   catch (e) { mostrarEstadoAuth(mensajeFirebase(e)); }
 });
+
 $("btnLogout").addEventListener("click", async () => {
-  try { await signOut(auth); }
-  catch (e) { mostrarEstadoAuth(mensajeFirebase(e)); }
+  const boton = $("btnLogout");
+  boton.disabled = true;
+
+  try {
+    await signOut(auth);
+    console.log("Sesión cerrada correctamente");
+  } catch (e) {
+    mostrarEstadoAuth(mensajeFirebase(e));
+    alert("No se pudo cerrar sesión: " + e.message);
+  } finally {
+    boton.disabled = false;
+  }
 });
 function mensajeFirebase(error) {
   const mensajes = {
