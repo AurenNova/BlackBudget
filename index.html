@@ -3,538 +3,404 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BlackBudget | Presupuestos y cuentas</title>
   <meta name="description" content="Calcula precios, guarda comisiones y organiza tus cuentas con BlackBudget.">
+  <meta name="theme-color" content="#121212">
+  <title>BlackBudget | Presupuestos y cuentas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="decoraciones" aria-hidden="true"></div>
-  <h1>☾ BlackBudget ✧</h1>
-  <p>Tu trabajo, tu valor, tus cuentas.</p>
-  <p>Calcula precios, guarda presupuestos y organiza tus cuentas en un solo lugar.</p>
-</header>
+  <header>
+    <h1>🖤 BlackBudget</h1>
+    <p>Presupuesta con calma. Organiza tus cuentas.</p>
+  </header>
 
-<main id="inicio">
-  <section id="authSection" class="panel-auth">
-    <h2>☾ Tu espacio personal</h2>
-    <p id="authEstado">Inicia sesión para guardar tus presupuestos en la nube.</p>
-    <label for="authEmail">Correo electrónico</label>
-    <input type="email" id="authEmail" autocomplete="email" placeholder="tu@correo.com">
-    <label for="authPassword">Contraseña</label>
-    <input type="password" id="authPassword" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
-    <div class="auth-botones">
-      <button id="btnRegistro" type="button">Crear cuenta</button>
-      <button id="btnLogin" type="button">Iniciar sesión</button>
-      <button id="btnGoogle" type="button">Continuar con Google</button>
-      <button id="btnLogout" type="button" style="display:block !important; visibility:visible !important;">Cerrar sesión</button>
-    </div>
-    <p id="authAviso" class="aviso" role="status" hidden></p>
-  </section>
-<section id="zonaApp" hidden>
-    <h2>Calculadoras de precios y presupuesto personal</h2>
-    <p id="usuarioActual" class="usuario-actual"></p>
-    <button id="btnLogout" type="button">Cerrar sesión</button>
+  <main>
+    <p id="estadoGeneral" role="status" aria-live="polite">Conectando con BlackBudget…</p>
 
-    <button id="btnProductos">Productos y manualidades</button>
-    <button id="btnServicios">🎨 Comisiones artísticas</button>
-    <button id="btnCuentas">💜 Control de ingresos y gastos</button>
-
-    <section id="registroCuentas" class="registro" hidden>
-      <div class="saldo"><p>Saldo disponible</p><h3 id="saldoActual">$ 0 COP</h3></div>
-      <label for="tipoMovimiento">Tipo de movimiento</label>
-      <select id="tipoMovimiento"><option value="ingreso">💚 Ingreso</option><option value="gasto">💗 Gasto</option></select>
-      <label for="conceptoMovimiento">Concepto</label>
-      <input type="text" id="conceptoMovimiento" placeholder="Ej. Venta de un osito">
-      <label for="valorMovimiento">Valor (COP)</label>
-      <input type="number" id="valorMovimiento" min="1" step="100" placeholder="Ej. 25000">
-      <button id="btnAgregarMovimiento">Añadir movimiento</button>
-      <p id="avisoMovimiento" class="aviso" hidden role="alert"></p>
-      <h3>📋 Historial de ingresos y gastos</h3>
-      <ul id="historialMovimientos"></ul>
-      <button id="btnLimpiarMovimientos">🗑️ Borrar historial</button>
-      <button id="btnVolverCuentas">☾ Volver al inicio</button>
+    <section id="authSection" class="panel-auth">
+      <h2>🌙 Tu espacio</h2>
+      <p>Inicia sesión para guardar tus datos de forma privada en tu cuenta.</p>
+      <form id="formLogin">
+        <label for="correoAuth">Correo electrónico</label>
+        <input id="correoAuth" type="email" autocomplete="email" required placeholder="tu@correo.com">
+        <label for="claveAuth">Contraseña</label>
+        <input id="claveAuth" type="password" autocomplete="current-password" minlength="6" required placeholder="Mínimo 6 caracteres">
+        <div class="auth-botones">
+          <button id="btnLogin" type="submit">Iniciar sesión</button>
+          <button id="btnCrearCuenta" type="button">Crear cuenta</button>
+          <button id="btnGoogle" type="button">Continuar con Google</button>
+          <button id="btnRecuperar" type="button">Olvidé mi contraseña</button>
+        </div>
+      </form>
+      <p id="estadoAuth" role="status" aria-live="polite"></p>
     </section>
-  </section>
-</main>
 
-<section class="prueba-patron" id="patron">
-  <p>✦ Un rincón para tus ideas ✦</p>
-  <p>🧶 Tus manualidades merecen su propio espacio.</p>
-  <p>🌙 Organiza tus cuentas con calma.</p>
-</section>
+    <section id="zonaApp" hidden>
+      <div class="panel-auth">
+        <p>Sesión iniciada como <strong id="usuarioActual">cuenta</strong></p>
+        <button id="btnLogout" type="button">Cerrar sesión</button>
+      </div>
 
-<section id="calculadora" class="calculadora" hidden>
-  <h2>🧶 Calculadora de precios para productos y manualidades</h2>
-  <p>Calcula cuánto vale tu trabajo.</p>
-  <label for="nombreProducto">Nombre del producto</label>
-  <input type="text" id="nombreProducto" placeholder="Ej. Osito tejido">
-  <label for="cantidadProductos">Cantidad de unidades fabricadas</label>
-  <input type="number" id="cantidadProductos" min="1" step="1" value="1">
-  <h3>✦ Costes de materiales</h3>
-  <label for="costeMateriales">Coste total de materiales (COP)</label>
-  <input type="number" id="costeMateriales" min="0" step="100" placeholder="Ej. 18000">
-  <h3>✦ Mano de obra</h3>
-  <label for="horasTrabajo">Horas trabajadas</label>
-  <input type="number" id="horasTrabajo" min="0" step="0.5" placeholder="Ej. 4">
-  <label for="valorHora">Valor de tu hora de trabajo (COP)</label>
-  <input type="number" id="valorHora" min="0" step="100" placeholder="Ej. 5000">
-  <h3>✦ Costes adicionales</h3>
-  <label for="costesAdicionales">Otros costes (COP)</label>
-  <input type="number" id="costesAdicionales" min="0" step="100" placeholder="Ej. 2000">
-  <h3>✦ Ganancia deseada</h3>
-  <label for="porcentajeGanancia">Porcentaje de ganancia (%)</label>
-  <input type="number" id="porcentajeGanancia" min="0" step="1" value="25">
-  <button id="btnCalcular">Calcular precio</button>
-  <div id="resultado" class="resultado"><h3>🌙 Tu presupuesto</h3><p>El precio final aparecerá aquí.</p></div>
-  <button id="btnGuardarProducto">☁️ Guardar presupuesto</button>
-  <p id="mensajeProducto" class="aviso" hidden></p>
-  <button id="btnCopiar">📋 Copiar presupuesto</button>
-  <p id="mensajeCopiar" hidden></p>
-  <div id="aviso" class="aviso" role="alert" hidden></div>
-  <button id="btnInicio">☾ Volver al inicio</button>
-</section>
+      <nav aria-label="Secciones de BlackBudget">
+        <button type="button" data-vista="inicio">Inicio</button>
+        <button type="button" data-vista="productos">Productos</button>
+        <button type="button" data-vista="comisiones">Comisiones</button>
+        <button type="button" data-vista="movimientos">Ingresos y gastos</button>
+      </nav>
 
-<section id="calculadoraServicios" class="calculadora" hidden>
-  <h2>🌙 Calculadora de comisiones artísticas</h2>
-  <p>Calcula una comisión a la vez y guarda cada presupuesto.</p>
-  <label for="nombreServicio">Nombre de la comisión</label>
-  <input type="text" id="nombreServicio" placeholder="Ej. Retrato personalizado">
-  <h3>✦ Tiempo de trabajo</h3>
-  <label for="horasServicio">Horas trabajadas</label>
-  <input type="number" id="horasServicio" min="0" step="0.5" placeholder="Ej. 3">
-  <label for="tarifaServicio">Valor de tu hora (COP)</label>
-  <input type="number" id="tarifaServicio" min="0" step="100" placeholder="Ej. 10000">
-  <h3>✦ Gastos adicionales</h3>
-  <label for="gastosServicio">Transporte, herramientas y otros gastos (COP)</label>
-  <input type="number" id="gastosServicio" min="0" step="100" placeholder="Ej. 5000">
-  <h3>✦ Ganancia deseada</h3>
-  <label for="gananciaServicio">Porcentaje de ganancia (%)</label>
-  <input type="number" id="gananciaServicio" min="0" step="1" value="25">
-  <button id="btnCalcularServicio">Calcular precio</button>
-  <div id="resultadoServicio" class="resultado"><h3>💜 Tu presupuesto</h3><p>El precio final aparecerá aquí.</p></div>
-  <button id="btnGuardarServicio">☁️ Guardar esta comisión</button>
-  <p id="mensajeGuardarServicio" class="aviso" hidden></p>
-  <button id="btnCopiarServicio">📋 Copiar presupuesto</button>
-  <p id="mensajeCopiarServicio" hidden></p>
-  <div id="avisoServicio" class="aviso" role="alert" hidden></div>
-  <h3>🗂️ Mis comisiones guardadas</h3>
-  <ul id="listaComisiones"></ul>
-  <button id="btnVolverServicios">☾ Volver al inicio</button>
-</section>
+      <section id="vistaInicio" class="calculadora">
+        <h2>✨ Tu panel</h2>
+        <p>Bienvenida a tu pequeño rincón de presupuestos.</p>
+        <ul>
+          <li>Calcula el precio justo de tus productos.</li>
+          <li>Guarda cada comisión artística por separado.</li>
+          <li>Registra ingresos y gastos en tu cuenta.</li>
+        </ul>
+      </section>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
-  query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+      <section id="vistaProductos" class="calculadora" hidden>
+        <h2>🧶 Calculadora de productos</h2>
+        <form id="formProducto">
+          <label for="nombreProducto">Nombre del producto</label>
+          <input id="nombreProducto" maxlength="120" required placeholder="Ej. Muñeco tejido">
+          <label for="costosMateriales">Costo de materiales (COP)</label>
+          <input id="costosMateriales" type="number" min="0" step="1" required value="0">
+          <label for="horasProducto">Horas de trabajo</label>
+          <input id="horasProducto" type="number" min="0" step="0.25" required value="0">
+          <label for="tarifaProducto">Valor por hora (COP)</label>
+          <input id="tarifaProducto" type="number" min="0" step="1" required value="0">
+          <label for="gastosProducto">Gastos adicionales (COP)</label>
+          <input id="gastosProducto" type="number" min="0" step="1" required value="0">
+          <label for="gananciaProducto">Ganancia sobre el costo total (%)</label>
+          <input id="gananciaProducto" type="number" min="0" max="10000" step="1" required value="25">
+          <button type="submit">Calcular y guardar producto</button>
+        </form>
+        <div id="resultadoProducto" aria-live="polite"></div>
+        <p id="avisoProducto" role="status" aria-live="polite"></p>
+        <h3>Productos guardados</h3>
+        <ul id="listaProductos"></ul>
+      </section>
 
-/* Configuración de la aplicación web de Firebase */
-const firebaseConfig = {
-  apiKey: "AIzaSyCpmVNajN7po6YctsSgqNUVahWZ6HwFGm4",
-  authDomain: "blackbudget-2b1fc.firebaseapp.com",
-  projectId: "blackbudget-2b1fc",
-  storageBucket: "blackbudget-2b1fc.firebasestorage.app",
-  messagingSenderId: "12308959683",
-  appId: "1:12308959683:web:8bccd2f691f3bcc72cad76"
-};
+      <section id="vistaComisiones" class="calculadora" hidden>
+        <h2>🎨 Calculadora de comisiones artísticas</h2>
+        <p>Calcula y guarda una comisión a la vez. Cada encargo conserva su propio precio.</p>
+        <form id="formComision">
+          <label for="nombreComision">Nombre de la comisión</label>
+          <input id="nombreComision" maxlength="120" required placeholder="Ej. Retrato de personaje">
+          <label for="tipoComision">Tipo de trabajo</label>
+          <input id="tipoComision" maxlength="100" placeholder="Ej. Ilustración digital">
+          <label for="horasComision">Horas de trabajo</label>
+          <input id="horasComision" type="number" min="0" step="0.25" required value="1">
+          <label for="tarifaComision">Valor por hora (COP)</label>
+          <input id="tarifaComision" type="number" min="0" step="1" required value="0">
+          <label for="gastosComision">Gastos adicionales (COP)</label>
+          <input id="gastosComision" type="number" min="0" step="1" required value="0">
+          <label for="gananciaComision">Ganancia sobre el costo total (%)</label>
+          <input id="gananciaComision" type="number" min="0" max="10000" step="1" required value="25">
+          <button type="submit">Calcular y guardar comisión</button>
+        </form>
+        <div id="resultadoComision" aria-live="polite"></div>
+        <p id="avisoComision" role="status" aria-live="polite"></p>
+        <h3>Mis comisiones guardadas</h3>
+        <ul id="listaComisiones"></ul>
+      </section>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+      <section id="vistaMovimientos" class="calculadora" hidden>
+        <h2>💰 Ingresos y gastos</h2>
+        <form id="formMovimiento">
+          <label for="tipoMovimiento">Tipo de movimiento</label>
+          <select id="tipoMovimiento" required>
+            <option value="ingreso">Ingreso</option>
+            <option value="gasto">Gasto</option>
+          </select>
+          <label for="descripcionMovimiento">Descripción</label>
+          <input id="descripcionMovimiento" maxlength="160" required placeholder="Ej. Pago de comisión">
+          <label for="valorMovimiento">Valor (COP)</label>
+          <input id="valorMovimiento" type="number" min="1" step="1" required>
+          <label for="fechaMovimiento">Fecha</label>
+          <input id="fechaMovimiento" type="date" required>
+          <button type="submit">Guardar movimiento</button>
+        </form>
+        <div id="resumenMovimientos" aria-live="polite"></div>
+        <p id="avisoMovimiento" role="status" aria-live="polite"></p>
+        <h3>Mis movimientos</h3>
+        <ul id="listaMovimientos"></ul>
+      </section>
+    </section>
+  </main>
 
-const $ = id => document.getElementById(id);
-const authSection = $("authSection");
-const zonaApp = $("zonaApp");
-const patron = $("patron");
-const pantallaInicio = $("inicio");
-const calculadora = $("calculadora");
-const calculadoraServicios = $("calculadoraServicios");
-const registroCuentas = $("registroCuentas");
-const tituloInicio = pantallaInicio.querySelector("#zonaApp h2");
-let usuario = null;
-let movimientos = [];
-let comisiones = [];
-let ultimoProducto = null;
-let ultimoServicio = null;
+  <footer><p>BlackBudget · Tus números, a tu manera 🌙</p></footer>
 
-function formatoCOP(valor) {
-  return "$ " + Number(valor || 0).toLocaleString("es-CO", { maximumFractionDigits: 2 }) + " COP";
-}
-function aviso(id, mensaje) {
-  const el = $(id);
-  el.textContent = mensaje;
-  el.hidden = false;
-}
-function ocultarAvisos(...ids) { ids.forEach(id => { if ($(id)) $(id).hidden = true; }); }
-function mostrarEstadoAuth(mensaje) { aviso("authAviso", mensaje); }
-function rutaUsuario(subcoleccion) {
-  if (!usuario) throw new Error("Inicia sesión primero.");
-  return collection(db, "users", usuario.uid, subcoleccion);
-}
-function ocultarSecciones() {
-  calculadora.hidden = true;
-  calculadoraServicios.hidden = true;
-  registroCuentas.hidden = true;
-}
-function irAlInicio() {
-  ocultarSecciones();
-  pantallaInicio.hidden = false;
-  zonaApp.hidden = false;
-  patron.hidden = false;
-  restablecerInicio();
-  window.scrollTo({top: 0, behavior: "smooth"});
-}
-$("btnProductos").addEventListener("click", () => {
-  ocultarSecciones(); pantallaInicio.hidden = false; zonaApp.hidden = false;
-  tituloInicio.hidden = true;
-  $("btnProductos").hidden = $("btnServicios").hidden = $("btnCuentas").hidden = true;
-  patron.hidden = true; calculadora.hidden = false; $("aviso").hidden = true;
-  window.scrollTo({top: 0, behavior: "smooth"});
-});
-$("btnServicios").addEventListener("click", async () => {
-  ocultarSecciones(); pantallaInicio.hidden = false; zonaApp.hidden = false;
-  tituloInicio.hidden = true;
-  $("btnProductos").hidden = $("btnServicios").hidden = $("btnCuentas").hidden = true;
-  patron.hidden = true; calculadoraServicios.hidden = false; $("avisoServicio").hidden = true;
-  await cargarComisiones();
-  window.scrollTo({top: 0, behavior: "smooth"});
-});
-$("btnCuentas").addEventListener("click", () => {
-  ocultarSecciones(); pantallaInicio.hidden = false; zonaApp.hidden = false;
-  tituloInicio.hidden = true;
-  $("btnProductos").hidden = $("btnServicios").hidden = $("btnCuentas").hidden = true;
-  patron.hidden = true; registroCuentas.hidden = false;
-  mostrarMovimientos();
-  window.scrollTo({top: 0, behavior: "smooth"});
-});
-$("btnInicio").addEventListener("click", irAlInicio);
-$("btnVolverServicios").addEventListener("click", irAlInicio);
-$("btnVolverCuentas").addEventListener("click", irAlInicio);
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import {
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import {
+      getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
+      serverTimestamp, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-function restablecerInicio() {
-  tituloInicio.hidden = false;
-  $("btnProductos").hidden = $("btnServicios").hidden = $("btnCuentas").hidden = false;
-}
-function renderLista(ul, items, renderItem) {
-  ul.replaceChildren();
-  items.forEach(item => ul.append(renderItem(item)));
-}
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpmVNajN7po6YctsSgNUVahZfW6HwFGm4",
+      authDomain: "blackbudget-2b1fc.firebaseapp.com",
+      projectId: "blackbudget-2b1fc",
+      storageBucket: "blackbudget-2b1fc.firebasestorage.app",
+      messagingSenderId: "12308959683",
+      appId: "1:12308959683:web:8bccd2f691f3bcc72cad76"
+    };
 
-/* Autenticación */
-$("btnRegistro").addEventListener("click", async () => {
-  const email = $("authEmail").value.trim();
-  const password = $("authPassword").value;
-  if (!email || password.length < 6) return mostrarEstadoAuth("Escribe un correo válido y una contraseña de al menos 6 caracteres.");
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    mostrarEstadoAuth("Cuenta creada. Ya puedes usar BlackBudget.");
-  } catch (e) { mostrarEstadoAuth(mensajeFirebase(e)); }
-});
-$("btnLogin").addEventListener("click", async () => {
-  const email = $("authEmail").value.trim();
-  const password = $("authPassword").value;
-  if (!email || !password) return mostrarEstadoAuth("Escribe tu correo y contraseña.");
-  try { await signInWithEmailAndPassword(auth, email, password); }
-  catch (e) { mostrarEstadoAuth(mensajeFirebase(e)); }
-});
-$("btnGoogle").addEventListener("click", async () => {
-  try { await signInWithPopup(auth, googleProvider); }
-  catch (e) { mostrarEstadoAuth(mensajeFirebase(e)); }
-});
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
 
-$("btnLogout").addEventListener("click", async () => {
-  const boton = $("btnLogout");
-  boton.disabled = true;
+    const $ = (id) => document.getElementById(id);
+    let usuario = null;
+    let productoCalculado = null;
+    let comisionCalculada = null;
 
-  try {
-    await signOut(auth);
-    console.log("Sesión cerrada correctamente");
-  } catch (e) {
-    mostrarEstadoAuth(mensajeFirebase(e));
-    alert("No se pudo cerrar sesión: " + e.message);
-  } finally {
-    boton.disabled = false;
-  }
-});
-function mensajeFirebase(error) {
-  const mensajes = {
-    "auth/email-already-in-use": "Ese correo ya tiene una cuenta. Prueba iniciar sesión.",
-    "auth/invalid-email": "El correo no parece válido.",
-    "auth/weak-password": "La contraseña debe tener al menos 6 caracteres.",
-    "auth/invalid-credential": "Correo o contraseña incorrectos.",
-    "auth/popup-closed-by-user": "Se cerró la ventana de Google antes de terminar.",
-    "auth/unauthorized-domain": "Este dominio no está autorizado en Firebase Authentication."
-  };
-  return mensajes[error.code] || "No se pudo completar la acción: " + (error.message || error.code);
-}
-onAuthStateChanged(auth, async user => {
-  usuario = user;
-  const conectado = Boolean(user);
-  authSection.hidden = conectado;
-  zonaApp.hidden = !conectado;
-  patron.hidden = !conectado;
-  $("btnLogout").hidden = !conectado;
-$("btnLogout").textContent = conectado
-  ? "Cerrar sesión (conectada)"
-  : "Sin sesión";
-  if (conectado) {
-$("btnLogout").addEventListener("click", async () => {
-  alert("El botón responde al clic");
-    $("usuarioActual").textContent = "Sesión iniciada: " + (user.email || "Google");
-    restablecerInicio();
-    ocultarSecciones();
-    calculadora.hidden = true;
-    calculadoraServicios.hidden = true;
-    registroCuentas.hidden = true;
-    await cargarMovimientos();
-    await cargarComisiones();
-    mostrarMovimientos();
-  } else {
-    movimientos = [];
-    comisiones = [];
-    $("usuarioActual").textContent = "";
-    $("historialMovimientos").replaceChildren();
-    $("listaComisiones").replaceChildren();
-  }
-});
-
-/* Movimientos: ahora se guardan en Firestore por usuario */
-function mostrarMovimientos() {
-  const saldo = movimientos.reduce((s, m) => s + (m.tipo === "ingreso" ? Number(m.valor) : -Number(m.valor)), 0);
-  $("saldoActual").textContent = formatoCOP(saldo);
-  renderLista($("historialMovimientos"), movimientos, m => {
-    const li = document.createElement("li");
-    li.textContent = (m.tipo === "ingreso" ? "💚 + " : "💗 − ") + formatoCOP(m.valor) + " | " + m.concepto;
-    return li;
-  });
-}
-async function cargarMovimientos() {
-  if (!usuario) return;
-  try {
-    const snap = await getDocs(query(rutaUsuario("movements"), orderBy("createdAt", "desc")));
-    movimientos = snap.docs.map(d => ({id: d.id, ...d.data()}));
-  } catch (e) {
-    if (e.code === "failed-precondition") {
-      const snap = await getDocs(rutaUsuario("movements"));
-      movimientos = snap.docs.map(d => ({id: d.id, ...d.data()}));
-    } else {
-      aviso("avisoMovimiento", "No se pudieron cargar los movimientos: " + e.message);
+    function estado(texto, destino = "estadoGeneral") {
+      const elemento = $(destino);
+      if (elemento) elemento.textContent = texto;
     }
-  }
-}
-$("btnAgregarMovimiento").addEventListener("click", async () => {
-  const concepto = $("conceptoMovimiento").value.trim();
-  const valorTexto = $("valorMovimiento").value.trim();
-  const valor = Number(valorTexto);
-  const tipo = $("tipoMovimiento").value;
-  $("avisoMovimiento").hidden = true;
-  if (!concepto) return aviso("avisoMovimiento", "🌙 Escribe el concepto del movimiento.");
-  if (!valorTexto || !Number.isFinite(valor) || valor <= 0) return aviso("avisoMovimiento", "🌙 Introduce un valor mayor que cero.");
-  if (!usuario) return aviso("avisoMovimiento", "Inicia sesión para guardar tus movimientos.");
-  try {
-    const data = {concepto, valor, tipo, createdAt: serverTimestamp()};
-    const ref = await addDoc(rutaUsuario("movements"), data);
-    movimientos.unshift({id: ref.id, concepto, valor, tipo});
-    mostrarMovimientos();
-    $("conceptoMovimiento").value = "";
-    $("valorMovimiento").value = "";
-  } catch (e) { aviso("avisoMovimiento", "No se pudo guardar en la nube: " + e.message); }
-});
-$("btnLimpiarMovimientos").addEventListener("click", async () => {
-  if (!confirm("¿Quieres borrar todos tus movimientos guardados en la nube?")) return;
-  try {
-    const snap = await getDocs(rutaUsuario("movements"));
-    await Promise.all(snap.docs.map(d => deleteDoc(doc(db, "users", usuario.uid, "movements", d.id))));
-    movimientos = [];
-    mostrarMovimientos();
-    $("avisoMovimiento").hidden = true;
-  } catch (e) { aviso("avisoMovimiento", "No se pudo borrar el historial: " + e.message); }
-});
 
-/* Presupuestos de productos */
-function mostrarAvisoProducto(mensaje) { aviso("aviso", "🌙 " + mensaje); }
-$("btnCalcular").addEventListener("click", () => {
-  const ids = ["costeMateriales","horasTrabajo","valorHora","costesAdicionales","porcentajeGanancia","cantidadProductos"];
-  for (const id of ids) {
-    const c = $(id);
-    if (c.value.trim() === "" || !Number.isFinite(Number(c.value)) || Number(c.value) < 0) {
-      mostrarAvisoProducto("Completa los campos con valores válidos y no negativos."); c.focus(); return;
+    function mensajeError(error) {
+      const mensajes = {
+        "auth/email-already-in-use": "Ese correo ya tiene una cuenta. Prueba iniciar sesión.",
+        "auth/invalid-email": "El correo no parece válido.",
+        "auth/weak-password": "La contraseña debe tener al menos 6 caracteres.",
+        "auth/invalid-credential": "Correo o contraseña incorrectos.",
+        "auth/user-not-found": "No encontramos una cuenta con ese correo.",
+        "auth/wrong-password": "La contraseña no es correcta.",
+        "auth/popup-closed-by-user": "Se cerró la ventana de Google antes de terminar.",
+        "auth/unauthorized-domain": "Este dominio no está autorizado en Firebase Authentication.",
+        "permission-denied": "Firebase bloqueó esta operación. Revisa las reglas privadas de Firestore.",
+        "unavailable": "No hay conexión con Firebase. Revisa tu internet e inténtalo de nuevo."
+      };
+      return mensajes[error?.code] || `No se pudo completar la operación. ${error?.message || "Inténtalo de nuevo."}`;
     }
-  }
-  const materiales = Number($("costeMateriales").value);
-  const horas = Number($("horasTrabajo").value);
-  const valorHora = Number($("valorHora").value);
-  const adicionales = Number($("costesAdicionales").value);
-  const porcentaje = Number($("porcentajeGanancia").value);
-  const cantidad = Number($("cantidadProductos").value);
-  const nombre = $("nombreProducto").value.trim() || "Producto sin nombre";
-  if (!Number.isInteger(cantidad) || cantidad < 1) return mostrarAvisoProducto("Introduce una cantidad entera de al menos 1 unidad.");
-  if (materiales === 0 && horas === 0 && adicionales === 0) return mostrarAvisoProducto("Introduce al menos un coste o algunas horas de trabajo.");
-  const manoObra = horas * valorHora, total = materiales + manoObra + adicionales;
-  const ganancia = total * porcentaje / 100, precio = total + ganancia;
-  ultimoProducto = {nombre, cantidad, materiales, horas, valorHora, adicionales, porcentaje, manoObra, costeTotal: total, ganancia, precioTotal: precio, precioUnitario: precio / cantidad, createdAt: new Date().toISOString()};
-  $("aviso").hidden = true;
-  const resultado = $("resultado"); resultado.replaceChildren();
-  const h = document.createElement("h3"); h.textContent = "🌙 Presupuesto de " + nombre; resultado.append(h);
-  [
-    ["Cantidad fabricada", cantidad + " unidades"], ["Materiales (trabajo completo)", materiales],
-    ["Mano de obra (trabajo completo)", manoObra], ["Costes adicionales (trabajo completo)", adicionales],
-    ["Coste total del trabajo", total], ["Ganancia total", ganancia], ["Precio de venta total", precio],
-    ["Coste por unidad", total/cantidad], ["Ganancia por unidad", ganancia/cantidad], ["Precio de venta por unidad", precio/cantidad]
-  ].forEach(([label, value]) => { const p = document.createElement("p"); p.textContent = label + ": " + (typeof value === "number" ? formatoCOP(value) : value); resultado.append(p); });
-});
-$("btnGuardarProducto").addEventListener("click", async () => {
-  if (!ultimoProducto) return aviso("mensajeProducto", "Primero calcula un presupuesto.");
-  try {
-    await addDoc(rutaUsuario("budgets"), {...ultimoProducto, type: "producto", createdAt: serverTimestamp()});
-    aviso("mensajeProducto", "☁️ Presupuesto guardado en tu cuenta.");
-  } catch (e) { aviso("mensajeProducto", "No se pudo guardar: " + e.message); }
-});
 
-/* Comisiones: una a la vez, cada una con su propio precio */
-$("btnCalcularServicio").addEventListener("click", () => {
-  const ids = ["horasServicio","tarifaServicio","gastosServicio","gananciaServicio"];
-  for (const id of ids) {
-    const c = $(id);
-    if (c.value.trim() === "" || !Number.isFinite(Number(c.value)) || Number(c.value) < 0) {
-      aviso("avisoServicio", "Completa los campos con valores válidos y no negativos."); c.focus(); return;
+    function rutaColeccion(nombre) {
+      if (!usuario) throw new Error("Debes iniciar sesión para guardar información.");
+      return collection(db, "users", usuario.uid, nombre);
     }
-  }
-  const horas = Number($("horasServicio").value), tarifa = Number($("tarifaServicio").value);
-  const gastos = Number($("gastosServicio").value), porcentaje = Number($("gananciaServicio").value);
-  const nombre = $("nombreServicio").value.trim() || "Comisión sin nombre";
-  if (horas === 0 && gastos === 0) return aviso("avisoServicio", "Introduce horas de trabajo o algún gasto adicional.");
-  const manoObra = horas * tarifa, costeTotal = manoObra + gastos;
-  const ganancia = costeTotal * porcentaje / 100, precioTotal = costeTotal + ganancia;
-  ultimoServicio = {nombre, horas, tarifa, gastos, porcentaje, manoObra, costeTotal, ganancia, precioTotal, createdAt: new Date().toISOString()};
-  $("avisoServicio").hidden = true;
-  const resultado = $("resultadoServicio"); resultado.replaceChildren();
-  const h = document.createElement("h3"); h.textContent = "💜 Presupuesto de " + nombre; resultado.append(h);
-  
-    [
-      ["Mano de obra", manoObra],
-      ["Gastos adicionales", gastos],
-      ["Coste total", costeTotal],
-      ["Ganancia", ganancia],
-      ["Precio final", precioTotal]
-    ].forEach(([etiqueta, valor]) => {
-      const p = document.createElement("p");
-      p.textContent = etiqueta + ": " + formatoCOP(valor);
-      resultado.append(p);
-    });
-});
 
-$("btnGuardarServicio").addEventListener("click", async () => {
-  if (!ultimoServicio) {
-    return aviso("mensajeGuardarServicio", "Primero calcula una comisión.");
-  }
+    function dinero(valor) {
+      return new Intl.NumberFormat("es-CO", {
+        style: "currency", currency: "COP", maximumFractionDigits: 0
+      }).format(Number(valor) || 0);
+    }
 
-  try {
-    await addDoc(rutaUsuario("commissions"), {
-      ...ultimoServicio,
-      createdAt: serverTimestamp()
+    function numero(id) {
+      return Math.max(0, Number($(id).value) || 0);
+    }
+
+    function textoSeguro(texto) {
+      return String(texto ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[caracter]);
+    }
+
+    function mostrarVista(nombre) {
+      const vistas = {
+        inicio: "vistaInicio",
+        productos: "vistaProductos",
+        comisiones: "vistaComisiones",
+        movimientos: "vistaMovimientos"
+      };
+      Object.entries(vistas).forEach(([clave, id]) => { $(id).hidden = clave !== nombre; });
+    }
+
+    document.querySelectorAll("[data-vista]").forEach(boton => {
+      boton.addEventListener("click", () => mostrarVista(boton.dataset.vista));
     });
 
-    aviso("mensajeGuardarServicio", "💜 Comisión guardada en tu cuenta.");
-    await cargarComisiones();
-  } catch (e) {
-    aviso("mensajeGuardarServicio", "No se pudo guardar: " + e.message);
-  }
-});
+    $("formLogin").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      estado("Iniciando sesión…", "estadoAuth");
+      try {
+        await signInWithEmailAndPassword(auth, $("correoAuth").value.trim(), $("claveAuth").value);
+        estado("Sesión iniciada.", "estadoAuth");
+      } catch (error) { estado(mensajeError(error), "estadoAuth"); }
+    });
 
-async function cargarComisiones() {
-  if (!usuario) return;
+    $("btnCrearCuenta").addEventListener("click", async () => {
+      const correo = $("correoAuth").value.trim();
+      const clave = $("claveAuth").value;
+      if (!correo || !clave) return estado("Escribe tu correo y una contraseña de al menos 6 caracteres.", "estadoAuth");
+      estado("Creando tu cuenta…", "estadoAuth");
+      try {
+        await createUserWithEmailAndPassword(auth, correo, clave);
+        estado("Cuenta creada correctamente.", "estadoAuth");
+      } catch (error) { estado(mensajeError(error), "estadoAuth"); }
+    });
 
-  try {
-    const snap = await getDocs(
-      query(rutaUsuario("commissions"), orderBy("createdAt", "desc"))
-    );
+    $("btnGoogle").addEventListener("click", async () => {
+      estado("Abriendo inicio de sesión con Google…", "estadoAuth");
+      try {
+        await signInWithPopup(auth, googleProvider);
+        estado("Sesión iniciada con Google.", "estadoAuth");
+      } catch (error) { estado(mensajeError(error), "estadoAuth"); }
+    });
 
-    comisiones = snap.docs.map(d => ({
-      id: d.id,
-      ...d.data()
-    }));
+    $("btnRecuperar").addEventListener("click", async () => {
+      const correo = $("correoAuth").value.trim();
+      if (!correo) return estado("Escribe tu correo para enviarte el enlace de recuperación.", "estadoAuth");
+      try {
+        await sendPasswordResetEmail(auth, correo);
+        estado("Si hay una cuenta asociada, recibirás un correo para restablecer la contraseña.", "estadoAuth");
+      } catch (error) { estado(mensajeError(error), "estadoAuth"); }
+    });
 
-    renderLista($("listaComisiones"), comisiones, comision => {
-      const li = document.createElement("li");
-      const texto = document.createElement("span");
+    $("btnLogout").addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        estado("Sesión cerrada correctamente.");
+      } catch (error) { estado(mensajeError(error)); }
+    });
 
-      texto.textContent =
-        comision.nombre + " · " + formatoCOP(comision.precioTotal);
+    onAuthStateChanged(auth, async usuarioFirebase => {
+      usuario = usuarioFirebase;
+      const conectado = Boolean(usuario);
+      $("authSection").hidden = conectado;
+      $("zonaApp").hidden = !conectado;
+      $("usuarioActual").textContent = usuario?.email || "Cuenta de Google";
+      if (conectado) {
+        estado("Conectada. Tus datos se guardan en tu espacio privado.");
+        mostrarVista("inicio");
+        await cargarTodo();
+      } else {
+        $("listaProductos").replaceChildren();
+        $("listaComisiones").replaceChildren();
+        $("listaMovimientos").replaceChildren();
+        $("resultadoProducto").textContent = "";
+        $("resultadoComision").textContent = "";
+        $("resumenMovimientos").textContent = "";
+        estado("Inicia sesión para usar y guardar tus presupuestos.");
+      }
+    });
 
-      const boton = document.createElement("button");
-      boton.type = "button";
-      boton.textContent = "Eliminar";
+    $("formProducto").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      if (!usuario) return estado("Inicia sesión antes de guardar.", "avisoProducto");
+      const nombre = $("nombreProducto").value.trim();
+      const materiales = numero("costosMateriales");
+      const horas = numero("horasProducto");
+      const tarifa = numero("tarifaProducto");
+      const gastos = numero("gastosProducto");
+      const porcentaje = numero("gananciaProducto");
+      const manoObra = horas * tarifa;
+      const costoTotal = materiales + manoObra + gastos;
+      const precio = Math.round(costoTotal * (1 + porcentaje / 100));
+      productoCalculado = { nombre, materiales, horas, tarifa, gastos, porcentaje, manoObra, costoTotal, precio };
+      $("resultadoProducto").textContent = `Costo total: ${dinero(costoTotal)} · Precio sugerido: ${dinero(precio)} · Ganancia: ${dinero(precio - costoTotal)}`;
+      estado("Guardando producto…", "avisoProducto");
+      try {
+        await addDoc(rutaColeccion("products"), { ...productoCalculado, createdAt: serverTimestamp() });
+        estado("Producto calculado y guardado.", "avisoProducto");
+        await cargarProductos();
+      } catch (error) { estado(mensajeError(error), "avisoProducto"); }
+    });
 
-      boton.addEventListener("click", async () => {
-        if (!confirm("¿Eliminar esta comisión guardada?")) return;
+    $("formComision").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      if (!usuario) return estado("Inicia sesión antes de guardar.", "avisoComision");
+      const nombre = $("nombreComision").value.trim();
+      const tipo = $("tipoComision").value.trim();
+      const horas = numero("horasComision");
+      const tarifa = numero("tarifaComision");
+      const gastos = numero("gastosComision");
+      const porcentaje = numero("gananciaComision");
+      const manoObra = horas * tarifa;
+      const costoTotal = manoObra + gastos;
+      const precio = Math.round(costoTotal * (1 + porcentaje / 100));
+      comisionCalculada = { nombre, tipo, horas, tarifa, gastos, porcentaje, manoObra, costoTotal, precio };
+      $("resultadoComision").textContent = `Costo total: ${dinero(costoTotal)} · Precio sugerido: ${dinero(precio)} · Ganancia: ${dinero(precio - costoTotal)}`;
+      estado("Guardando comisión…", "avisoComision");
+      try {
+        await addDoc(rutaColeccion("commissions"), { ...comisionCalculada, createdAt: serverTimestamp() });
+        estado("Comisión guardada en tu cuenta.", "avisoComision");
+        await cargarComisiones();
+      } catch (error) { estado(mensajeError(error), "avisoComision"); }
+    });
 
-        try {
-          await deleteDoc(
-            doc(db, "users", usuario.uid, "commissions", comision.id)
-          );
+    $("formMovimiento").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      if (!usuario) return estado("Inicia sesión antes de guardar.", "avisoMovimiento");
+      const tipo = $("tipoMovimiento").value;
+      const descripcion = $("descripcionMovimiento").value.trim();
+      const valor = Number($("valorMovimiento").value);
+      const fecha = $("fechaMovimiento").value;
+      if (!descripcion || !Number.isFinite(valor) || valor <= 0 || !fecha) {
+        return estado("Completa todos los campos con valores válidos.", "avisoMovimiento");
+      }
+      try {
+        await addDoc(rutaColeccion("movements"), { tipo, descripcion, valor, fecha, createdAt: serverTimestamp() });
+        $("formMovimiento").reset();
+        $("fechaMovimiento").value = new Date().toISOString().slice(0, 10);
+        estado("Movimiento guardado.", "avisoMovimiento");
+        await cargarMovimientos();
+      } catch (error) { estado(mensajeError(error), "avisoMovimiento"); }
+    });
 
-          await cargarComisiones();
-        } catch (e) {
-          aviso("avisoServicio", "No se pudo eliminar: " + e.message);
-        }
+    async function leerColeccion(nombre) {
+      if (!usuario) return [];
+      const consulta = query(rutaColeccion(nombre), orderBy("createdAt", "desc"));
+      const instantanea = await getDocs(consulta);
+      return instantanea.docs.map(documento => ({ id: documento.id, ...documento.data() }));
+    }
+
+    async function cargarProductos() {
+      const lista = $("listaProductos");
+      lista.replaceChildren();
+      const elementos = await leerColeccion("products");
+      if (!elementos.length) { lista.textContent = "Todavía no has guardado productos."; return; }
+      elementos.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${textoSeguro(item.nombre)}</strong>: ${dinero(item.precio)} <span>(costo: ${dinero(item.costoTotal)})</span> `;
+        const eliminar = document.createElement("button");
+        eliminar.type = "button"; eliminar.textContent = "Eliminar";
+        eliminar.addEventListener("click", () => eliminarDocumento("products", item.id, cargarProductos, "avisoProducto"));
+        li.append(" ", eliminar); lista.append(li);
       });
+    }
 
-      li.append(texto, boton);
-      return li;
-    });
-  } catch (e) {
-    aviso("avisoServicio", "No se pudieron cargar las comisiones: " + e.message);
-  }
-}
+    async function cargarComisiones() {
+      const lista = $("listaComisiones");
+      lista.replaceChildren();
+      const elementos = await leerColeccion("commissions");
+      if (!elementos.length) { lista.textContent = "Todavía no has guardado comisiones."; return; }
+      elementos.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${textoSeguro(item.nombre)}</strong>${item.tipo ? ` · ${textoSeguro(item.tipo)}` : ""}: ${dinero(item.precio)} <span>(costo: ${dinero(item.costoTotal)})</span>`;
+        const eliminar = document.createElement("button");
+        eliminar.type = "button"; eliminar.textContent = "Eliminar";
+        eliminar.addEventListener("click", () => eliminarDocumento("commissions", item.id, cargarComisiones, "avisoComision"));
+        li.append(" ", eliminar); lista.append(li);
+      });
+    }
 
-$("btnCopiar").addEventListener("click", async () => {
-  if (!ultimoProducto) {
-    return aviso("aviso", "Primero calcula un presupuesto.");
-  }
+    async function cargarMovimientos() {
+      const lista = $("listaMovimientos");
+      lista.replaceChildren();
+      const elementos = await leerColeccion("movements");
+      let ingresos = 0, gastos = 0;
+      elementos.forEach(item => { if (item.tipo === "ingreso") ingresos += Number(item.valor) || 0; else gastos += Number(item.valor) || 0; });
+      $("resumenMovimientos").textContent = `Ingresos: ${dinero(ingresos)} · Gastos: ${dinero(gastos)} · Balance: ${dinero(ingresos - gastos)}`;
+      if (!elementos.length) { lista.textContent = "Todavía no has registrado movimientos."; return; }
+      elementos.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.fecha || "Sin fecha"} · ${item.tipo === "ingreso" ? "Ingreso" : "Gasto"}: ${item.descripcion} · ${dinero(item.valor)} `;
+        const eliminar = document.createElement("button");
+        eliminar.type = "button"; eliminar.textContent = "Eliminar";
+        eliminar.addEventListener("click", () => eliminarDocumento("movements", item.id, cargarMovimientos, "avisoMovimiento"));
+        li.append(eliminar); lista.append(li);
+      });
+    }
 
-  const p = ultimoProducto;
-  const texto =
-    "Presupuesto: " + p.nombre + "\n" +
-    "Coste total: " + formatoCOP(p.costeTotal) + "\n" +
-    "Ganancia: " + formatoCOP(p.ganancia) + "\n" +
-    "Precio total: " + formatoCOP(p.precioTotal) + "\n" +
-    "Precio por unidad: " + formatoCOP(p.precioUnitario);
-
-  try {
-    await navigator.clipboard.writeText(texto);
-    aviso("mensajeCopiar", "Presupuesto copiado.");
-  } catch (e) {
-    aviso("mensajeCopiar", "No se pudo copiar automáticamente.");
-  }
-});
-
-$("btnCopiarServicio").addEventListener("click", async () => {
-  if (!ultimoServicio) {
-    return aviso("mensajeCopiarServicio", "Primero calcula una comisión.");
-  }
-
-  const s = ultimoServicio;
-  const texto =
-    "Comisión: " + s.nombre + "\n" +
-    "Coste total: " + formatoCOP(s.costeTotal) + "\n" +
-    "Ganancia: " + formatoCOP(s.ganancia) + "\n" +
-    "Precio final: " + formatoCOP(s.precioTotal);
-
-  try {
-    await navigator.clipboard.writeText(texto);
-    aviso("mensajeCopiarServicio", "Presupuesto copiado.");
-  } catch (e) {
-    aviso("mensajeCopiarServicio", "No se pudo copiar automáticamente.");
-  }
-});
-</script>
-</body>
-</html>
+    async function eliminarDocumento(nombreColeccion, id, recargar, destino) {
+      if (!usuario) return estado("Inicia sesión para continuar.", destino);
+      if (!confirm("¿Quieres eliminar este registro? Esta acción no se puede deshacer."))
