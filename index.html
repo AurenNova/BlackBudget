@@ -269,6 +269,9 @@ onAuthStateChanged(auth, async user => {
   zonaApp.hidden = !conectado;
   patron.hidden = !conectado;
   $("btnLogout").hidden = !conectado;
+$("btnLogout").textContent = conectado
+  ? "Cerrar sesión (conectada)"
+  : "Sin sesión";
   if (conectado) {
     $("usuarioActual").textContent = "Sesión iniciada: " + (user.email || "Google");
     restablecerInicio();
