@@ -404,3 +404,31 @@
     async function eliminarDocumento(nombreColeccion, id, recargar, destino) {
       if (!usuario) return estado("Inicia sesión para continuar.", destino);
       if (!confirm("¿Quieres eliminar este registro? Esta acción no se puede deshacer."))
+
+      try {
+        await deleteDoc(
+          doc(db, "users", usuario.uid, nombreColeccion, id)
+        );
+        estado("Registro eliminado.", destino);
+        await recargar();
+      } catch (error) {
+        estado(mensajeError(error), destino);
+      }
+    }
+
+    async function cargarTodo() {
+      try {
+        await Promise.all([
+          cargarProductos(),
+          cargarComisiones(),
+          cargarMovimientos()
+        ]);
+      } catch (error) {
+        estado(mensajeError(error));
+      }
+    }
+
+    $("fechaMovimiento").value = new Date().toISOString().slice(0, 10);
+  </script>
+</body>
+</html>
