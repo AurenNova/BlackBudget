@@ -418,7 +418,21 @@ $("formProducto").addEventListener("submit", async evento => {
       if (!elementos.length) { lista.textContent = "Todavía no has guardado comisiones."; return; }
       elementos.forEach(item => {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>${textoSeguro(item.nombre)}</strong>${item.tipo ? ` · ${textoSeguro(item.tipo)}` : ""}: ${dinero(item.precio)} <span>(costo: ${dinero(item.costoTotal)})</span>`;
+        const cantidad = item.cantidad || 1;
+const precioUnidad = item.precioUnitario ?? item.precio;
+const costoUnidad = item.costoUnitario ?? item.costoTotal;
+
+li.innerHTML = `
+  <strong>${textoSeguro(item.nombre)}</strong>
+  <br>
+  Unidades: ${cantidad}
+  <br>
+  Precio por unidad: ${dinero(precioUnidad)}
+  <br>
+  Costo por unidad: ${dinero(costoUnidad)}
+  <br>
+  Precio total del lote: ${dinero(item.precio)}
+`;
         const eliminar = document.createElement("button");
         eliminar.type = "button"; eliminar.textContent = "Eliminar";
         eliminar.addEventListener("click", () => eliminarDocumento("commissions", item.id, cargarComisiones, "avisoComision"));
