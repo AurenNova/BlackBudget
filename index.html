@@ -285,30 +285,69 @@
         $("resumenMovimientos").textContent = "";
         estado("Inicia sesión para usar y guardar tus presupuestos.");
       }
+    });   
+$("formProducto").addEventListener("submit", async evento => {
+  evento.preventDefault();
+
+  if (!usuario) {
+    return estado("Inicia sesión antes de guardar.", "avisoProducto");
+  }
+
+  const nombre = $("nombreProducto").value.trim();
+  const cantidad = Math.max(
+    1,
+    Math.floor(numero("cantidadProductos"))
+  );
+
+  const materiales = numero("costosMateriales");
+  const horas = numero("horasProducto");
+  const tarifa = numero("tarifaProducto");
+  const gastos = numero("gastosProducto");
+  const porcentaje = numero("gananciaProducto");
+
+  const manoObra = horas * tarifa;
+  const costoTotal = materiales + manoObra + gastos;
+  const precio = Math.round(costoTotal * (1 + porcentaje / 100));
+
+  const costoUnitario = costoTotal / cantidad;
+  const precioUnitario = Math.round(precio / cantidad);
+
+  productoCalculado = {
+    nombre,
+    cantidad,
+    materiales,
+    horas,
+    tarifa,
+    gastos,
+    porcentaje,
+    manoObra,
+    costoTotal,
+    precio,
+    costoUnitario,
+    precioUnitario
+  };
+
+  $("resultadoProducto").textContent =
+    `Unidades: ${cantidad} · ` +
+    `Costo total: ${dinero(costoTotal)} · ` +
+    `Costo por unidad: ${dinero(costoUnitario)} · ` +
+    `Precio total sugerido: ${dinero(precio)} · ` +
+    `Precio por unidad: ${dinero(precioUnitario)}`;
+
+  estado("Guardando producto…", "avisoProducto");
+
+  try {
+    await addDoc(rutaColeccion("products"), {
+      ...productoCalculado,
+      createdAt: serverTimestamp()
     });
 
-    $("formProducto").addEventListener("submit", async evento => {
-      evento.preventDefault();
-      if (!usuario) return estado("Inicia sesión antes de guardar.", "avisoProducto");
-      const nombre = $("nombreProducto").value.trim();
-      const materiales = numero("costosMateriales");
-      const horas = numero("horasProducto");
-      const tarifa = numero("tarifaProducto");
-      const gastos = numero("gastosProducto");
-      const porcentaje = numero("gananciaProducto");
-      const manoObra = horas * tarifa;
-      const costoTotal = materiales + manoObra + gastos;
-      const precio = Math.round(costoTotal * (1 + porcentaje / 100));
-      productoCalculado = { nombre, materiales, horas, tarifa, gastos, porcentaje, manoObra, costoTotal, precio };
-      $("resultadoProducto").textContent = `Costo total: ${dinero(costoTotal)} · Precio sugerido: ${dinero(precio)} · Ganancia: ${dinero(precio - costoTotal)}`;
-      estado("Guardando producto…", "avisoProducto");
-      try {
-        await addDoc(rutaColeccion("products"), { ...productoCalculado, createdAt: serverTimestamp() });
-        estado("Producto calculado y guardado.", "avisoProducto");
-        await cargarProductos();
-      } catch (error) { estado(mensajeError(error), "avisoProducto"); }
-    });
-
+    estado("Producto calculado y guardado.", "avisoProducto");
+    await cargarProductos();
+  } catch (error) {
+    estado(mensajeError(error), "avisoProducto");
+  }
+});
     $("formComision").addEventListener("submit", async evento => {
       evento.preventDefault();
       if (!usuario) return estado("Inicia sesión antes de guardar.", "avisoComision");
